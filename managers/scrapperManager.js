@@ -74,7 +74,7 @@ class ScrapperManager {
               if (membersMatch) {
                 const membersString = membersMatch[1];
                 // Split by & and extract members
-                const memberNames = membersString.split("&");
+                const memberNames = membersString.split(/&|,/);
                 
                 for (let k = 0; k < memberNames.length; k++) {
                   const memberName = memberNames[k].trim();
