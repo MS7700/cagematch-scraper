@@ -106,7 +106,7 @@ class ScrapperManager {
               }
               
               entities.push({
-                type: "team",
+                type: id == 28 ? "team" : "stable",
                 id: nr,
                 name: name,
                 members: members
