@@ -47,7 +47,6 @@ class ScrapperManager {
           // Parse wrestlers and teams
           const entities = [];
           const links = matchCard.querySelectorAll("a");
-          
           // Extract all wrestlers and teams with for loop
           for (let j = 0; j < links.length; j++) {
             const link = links[j];
@@ -57,14 +56,14 @@ class ScrapperManager {
             const nr = params.get("nr");
             const name = link.textContent.trim();
             
-            // Check if this is a wrestler (id=2) or team (id=28)
+            // Check if this is a wrestler (id=2), team (id=28) or faction (id=29)
             if (id === "2") {
               entities.push({
                 type: "wrestler",
                 id: nr,
                 name: name
               });
-            } else if (id === "28") {
+            } else if (id === "28" || id === "29") {
               // Extract team members if available
               const membersText = matchText.substring(
                 matchText.indexOf(name) + name.length
