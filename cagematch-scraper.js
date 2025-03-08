@@ -1,5 +1,7 @@
 const RequestManager = require("./managers/request-manager");
 const ScraperManager = require("./managers/scraper-manager");
+const logger = require("./utility/logger");
+const section = "CAGEMATCH-SCRAPER";
 
 class CagematchScraper {
     constructor() {
@@ -12,8 +14,14 @@ class CagematchScraper {
          * @type {ScraperManager}
          */
         this.scraperManager = new ScraperManager();
+        this.isVerbose = false;
     }
 
+    setIsVerbose(verbose){
+        this.isVerbose = verbose;
+        this.requestManager.setIsVerbose(verbose);
+        this.scraperManager.setIsVerbose(verbose);
+    }
     async extractMatchesByDate(date) {
         const totalMatches = [];
         let done = false;
@@ -29,7 +37,7 @@ class CagematchScraper {
             }
             page++;
         }
-        console.debug(`Total matches: ${totalMatches.length}`);
+        logger(`Total matches: ${totalMatches.length}`, "info", section, this.isVerbose);
         return totalMatches;
     }
 }

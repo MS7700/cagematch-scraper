@@ -1,10 +1,16 @@
 const { JSDOM } = require('jsdom');
 const { splitWithParenthesisHandling } = require('../utility/utility-functions');
+const logger = require('../utility/logger');
+const section = "CAGEMATCH-SCRAPER:SCRAPER-MANAGER";
 
 class ScraperManager {
   constructor() {
+    this.isVerbose = false; 
   }
 
+  setIsVerbose(verbose){
+    this.isVerbose = verbose;
+  }
 
 
 
@@ -127,7 +133,7 @@ class ScraperManager {
       // Extract match duration if available
       const matchText = matchCard.textContent;
       if (!matchText.includes(" defeats ") && !matchText.includes(" defeat ") && !matchText.includes(" vs. ")) {
-        console.log("Error Scrapping Match:" + matchText);
+        logger("Match couldn't be scraped because of bad format:" + matchText, "error",section, this.isVerbose);
         continue;
       }
       const durationMatch = matchText.match(/\((\d+:\d+)\)/);
@@ -230,11 +236,8 @@ class ScraperManager {
       }
       if (!isTeam && !isDraw) {
         const separator = matchText.includes(" defeats ") ? " defeats " : " defeat ";
-        if (matchText.split(" defeats ").length < 2) {
-          console.log(matchText);
-        }
-        const winnerText = cleanMatchesText(matchText.split(" defeats ")[0]);
-        const loserText = cleanMatchesText(matchText.split(" defeats ")[1]);
+        const winnerText = cleanMatchesText(matchText.split(separator)[0]);
+        const loserText = cleanMatchesText(matchText.split(separator)[1]);
         if (!entities.some(e => e.name === winnerText)) {
           entities.push({
             id: null,
