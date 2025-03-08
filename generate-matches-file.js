@@ -1,5 +1,5 @@
 
-const CagematchScrapper = require('./cagematchScrapper');
+const CagematchScraper = require('./cagematch-scraper');
 const fs = require('node:fs/promises');
 
 const date = new Date();
@@ -41,8 +41,8 @@ if(process.argv.length === 5){
  */
 async function generateMatchesFile(date) {
     console.log(`Generating matches for ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`);
-    const cagematchScrapper = new CagematchScrapper();
-    const totalMatches = await cagematchScrapper.extractMatchesByDate(date);
+    const cagematchScraper = new CagematchScraper();
+    const totalMatches = await cagematchScraper.extractMatchesByDate(date);
     console.log(`Total matches: ${totalMatches.length}`);
     try {
         const content ="[" + totalMatches.map(match => JSON.stringify(match)).join(',\n') + "]";

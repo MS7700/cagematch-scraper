@@ -1,10 +1,10 @@
-# Cagematch Scrapper
+# Cagematch Scraper
 
-The Cagematch Scrapper is a Node.js project designed to scrape data from the Cagematch website and generate a JSON file containing match details.
+The Cagematch Scraper is a Node.js project designed to scrape data from the Cagematch website and generate a JSON file containing match details.
 
 ## Overview
 
-The `CagematchScrapper` class is responsible for scraping match data from the Cagematch website. It uses the `RequestManager` to fetch match data and the `ScrapperManager` to extract match details from the HTML.
+The `CagematchScraper` class is responsible for scraping match data from the Cagematch website. It uses the `RequestManager` to fetch match data and the `ScraperManager` to extract match details from the HTML.
 
 ## JSON Structure Examples
 

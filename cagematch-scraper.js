@@ -1,7 +1,7 @@
-const RequestManager = require("./managers/requestManager");
-const ScrapperManager = require("./managers/scrapperManager");
+const RequestManager = require("./managers/request-manager");
+const ScraperManager = require("./managers/scraper-manager");
 
-class CagematchScrapper {
+class CagematchScraper {
     constructor() {
         this.url = "https://www.cagematch.net";
         /**
@@ -9,9 +9,9 @@ class CagematchScrapper {
          */
         this.requestManager = new RequestManager(this.url);
         /**
-         * @type {ScrapperManager}
+         * @type {ScraperManager}
          */
-        this.scrapperManager = new ScrapperManager();
+        this.scraperManager = new ScraperManager();
     }
 
     async extractMatchesByDate(date) {
@@ -20,7 +20,7 @@ class CagematchScrapper {
         let page = 0;
         while (!done) {
             const matchesHTML = await this.requestManager.getMatchesByDate(date, page);
-            const matches = this.scrapperManager.extractMatches(matchesHTML);
+            const matches = this.scraperManager.extractMatches(matchesHTML);
             if (matches.length === 0) {
                 break;
             }
@@ -34,4 +34,4 @@ class CagematchScrapper {
     }
 }
 
-module.exports = CagematchScrapper;
+module.exports = CagematchScraper;
