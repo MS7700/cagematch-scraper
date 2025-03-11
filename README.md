@@ -28,11 +28,13 @@ The `CagematchScraper` class is responsible for scraping match data from the Cag
         {
             "type": "wrestler",
             "id": "1499",
+            "isMainEntity": true,
             "name": "Kevin Owens"
         },
         {
             "type": "wrestler",
             "id": "1523",
+            "isMainEntity": true,
             "name": "Sami Zayn"
         }
     ],
@@ -40,6 +42,7 @@ The `CagematchScraper` class is responsible for scraping match data from the Cag
         {
             "type": "wrestler",
             "id": "1499",
+            "isMainEntity": true,
             "name": "Kevin Owens"
         }
     ],
@@ -47,6 +50,7 @@ The `CagematchScraper` class is responsible for scraping match data from the Cag
         {
             "type": "wrestler",
             "id": "1523",
+            "isMainEntity": true,
             "name": "Sami Zayn"
         }
     ]
@@ -74,6 +78,7 @@ The `CagematchScraper` class is responsible for scraping match data from the Cag
             "type": "stable",
             "id": "3877",
             "name": "The Undisputed Kingdom",
+            "isMainEntity": true,
             "members": [
                 {
                     "type": "wrestler",
@@ -101,6 +106,7 @@ The `CagematchScraper` class is responsible for scraping match data from the Cag
             "type": "team",
             "id": "5470",
             "name": "FTR",
+            "isMainEntity": true,
             "members": [
                 {
                     "type": "wrestler",
@@ -130,6 +136,7 @@ The `CagematchScraper` class is responsible for scraping match data from the Cag
             "type": "stable",
             "id": "3877",
             "name": "The Undisputed Kingdom",
+            "isMainEntity": true,
             "members": [
                 {
                     "type": "wrestler",
@@ -149,6 +156,7 @@ The `CagematchScraper` class is responsible for scraping match data from the Cag
             "type": "team",
             "id": "5470",
             "name": "FTR",
+            "isMainEntity": true,
             "members": [
                 {
                     "type": "wrestler",

@@ -40,8 +40,8 @@ describe('ScraperManager', () => {
             expect(matches.length).toEqual(1);
             expect(matches[0].date).toEqual("01.03.2025");
             expect(matches[0].promotions).toEqual(['All Elite Wrestling']);
-            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"12703","name":"Swerve Strickland"}]);
-            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"19930","name":"Clark Connors"}]);
+            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"12703","isMainEntity":true,"name":"Swerve Strickland"}]);
+            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"19930","isMainEntity":true,"name":"Clark Connors"}]);
             expect(matches[0].duration).toEqual("10:08");
             expect(matches[0].eventType).toEqual('TV-Show');
             expect(matches[0].event).toEqual('AEW Collision #82');
@@ -51,7 +51,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([]);
             expect(matches[0].matchType).toEqual('');
             expect(matches[0].isTitleChange).toEqual(false);
-            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"12703","name":"Swerve Strickland"},{"type":"wrestler","id":"19930","name":"Clark Connors"}]);
+            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"12703","isMainEntity":true, "name":"Swerve Strickland"},{"type":"wrestler","id":"19930","isMainEntity":true,"name":"Clark Connors"}]);
 
             testSinglesMatchHTML = `<div class="TableContents">
             <table class="TBase TableBorderColor">
@@ -88,7 +88,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([]);
             expect(matches[0].matchType).toEqual('');
             expect(matches[0].isTitleChange).toEqual(false);
-            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"12703","name":"Swerve Strickland"},{"type":"wrestler","id":"19930","name":"Clark Connors"}]);
+            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"12703","isMainEntity":true,"name":"Swerve Strickland"},{"type":"wrestler","id":"19930","isMainEntity":true,"name":"Clark Connors"}]);
 
             testSinglesMatchHTML = `<div class="TableContents">
             <table class="TBase TableBorderColor">
@@ -114,8 +114,8 @@ describe('ScraperManager', () => {
             expect(matches.length).toEqual(1);
             expect(matches[0].date).toEqual("01.03.2025");
             expect(matches[0].promotions).toEqual(['All Elite Wrestling']);
-            expect(matches[0].winners).toEqual([{"type":"wrestler","id":null,"name":"Swerve Strickland"}]);
-            expect(matches[0].losers).toEqual([{"type":"wrestler","id":null,"name":"Clark Connors"}]);
+            expect(matches[0].winners).toEqual([{"type":"wrestler","id":null,"isMainEntity":true,"name":"Swerve Strickland"}]);
+            expect(matches[0].losers).toEqual([{"type":"wrestler","id":null,"isMainEntity":true,"name":"Clark Connors"}]);
             expect(matches[0].duration).toEqual("10:08");
             expect(matches[0].eventType).toEqual('TV-Show');
             expect(matches[0].event).toEqual('AEW Collision #82');
@@ -125,7 +125,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([]);
             expect(matches[0].matchType).toEqual('');
             expect(matches[0].isTitleChange).toEqual(false);
-            expect(matches[0].entities).toEqual([{"type":"wrestler","id":null,"name":"Swerve Strickland"},{"type":"wrestler","id":null,"name":"Clark Connors"}]);
+            expect(matches[0].entities).toEqual([{"type":"wrestler","id":null,"isMainEntity":true,"name":"Swerve Strickland"},{"type":"wrestler","id":null,"isMainEntity":true,"name":"Clark Connors"}]);
 
             testSinglesMatchHTML = `<div class="TableContents">
             <table class="TBase TableBorderColor">
@@ -162,7 +162,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([]);
             expect(matches[0].matchType).toEqual('');
             expect(matches[0].isTitleChange).toEqual(false);
-            expect(matches[0].entities).toEqual([{"type":"wrestler","id":null,"name":"Swerve Strickland"},{"type":"wrestler","id":null,"name":"Clark Connors"}]);
+            expect(matches[0].entities).toEqual([{"type":"wrestler","id":null,"isMainEntity":true,"name":"Swerve Strickland"},{"type":"wrestler","id":null,"isMainEntity":true,"name":"Clark Connors"}]);
 
 
             testSinglesMatchHTML = `<div class="TableContents">
@@ -200,7 +200,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([]);
             expect(matches[0].matchType).toEqual('');
             expect(matches[0].isTitleChange).toEqual(false);
-            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"12703","name":"Swerve Strickland"},{"type":"wrestler","id":null,"name":"Clark Connors"}]);
+            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"12703","isMainEntity":true,"name":"Swerve Strickland"},{"type":"wrestler","id":null,"isMainEntity":true,"name":"Clark Connors"}]);
         });
 
         it('should extract titles',()=>{
@@ -229,8 +229,8 @@ describe('ScraperManager', () => {
             expect(matches.length).toEqual(1);
             expect(matches[0].date).toEqual("03.03.2025");
             expect(matches[0].promotions).toEqual(['World Wrestling Entertainment']);
-            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"9555","name":"IYO SKY"}]);
-            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"16519","name":"Rhea Ripley"}]);
+            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"9555","isMainEntity":true,"name":"IYO SKY"}]);
+            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"16519","isMainEntity":true,"name":"Rhea Ripley"}]);
             expect(matches[0].duration).toEqual("18:38");
             expect(matches[0].eventType).toEqual('Online Stream');
             expect(matches[0].event).toEqual('WWE Monday Night RAW #1658');
@@ -240,7 +240,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([{"id":"3116","name":"WWE Women's World Title"}]);
             expect(matches[0].matchType).toEqual('');
             expect(matches[0].isTitleChange).toEqual(true);
-            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"9555","name":"IYO SKY"},{"type":"wrestler","id":"16519","name":"Rhea Ripley"}]);
+            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"9555","isMainEntity":true,"name":"IYO SKY"},{"type":"wrestler","id":"16519","isMainEntity":true,"name":"Rhea Ripley"}]);
 
             testSinglesMatchHTML = `<div class="TableContents">
             <table class="TBase TableBorderColor">
@@ -266,8 +266,8 @@ describe('ScraperManager', () => {
             expect(matches.length).toEqual(1);
             expect(matches[0].date).toEqual("03.03.2025");
             expect(matches[0].promotions).toEqual(['World Wrestling Entertainment']);
-            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"9555","name":"IYO SKY"}]);
-            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"16519","name":"Rhea Ripley"}]);
+            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"9555","isMainEntity":true,"name":"IYO SKY"}]);
+            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"16519","isMainEntity":true,"name":"Rhea Ripley"}]);
             expect(matches[0].duration).toEqual("18:38");
             expect(matches[0].eventType).toEqual('Online Stream');
             expect(matches[0].event).toEqual('WWE Monday Night RAW #1658');
@@ -277,7 +277,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([{"id":"3116","name":"WWE Women's World Title"}]);
             expect(matches[0].matchType).toEqual('');
             expect(matches[0].isTitleChange).toEqual(false);
-            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"9555","name":"IYO SKY"},{"type":"wrestler","id":"16519","name":"Rhea Ripley"}]);
+            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"9555","isMainEntity":true,"name":"IYO SKY"},{"type":"wrestler","id":"16519","isMainEntity":true,"name":"Rhea Ripley"}]);
 
 
             testSinglesMatchHTML = `<div class="TableContents">
@@ -302,8 +302,8 @@ describe('ScraperManager', () => {
             expect(matches.length).toEqual(1);
             expect(matches[0].date).toEqual("03.03.2025");
             expect(matches[0].promotions).toEqual(['World Wonder Ring Stardom']);
-            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"20430","name":"Mei Seira"}]);
-            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"3709","name":"Fukigen Death"}]);
+            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"20430","isMainEntity":true,"name":"Mei Seira"}]);
+            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"3709","isMainEntity":true,"name":"Fukigen Death"}]);
             expect(matches[0].duration).toEqual("3:15");
             expect(matches[0].eventType).toEqual('Online Stream');
             expect(matches[0].event).toEqual('Stardom Nighter In Korakuen');
@@ -313,7 +313,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([{"id":"1333","name":"High Speed Title"}]);
             expect(matches[0].matchType).toEqual('Best Two Out Of Three Falls');
             expect(matches[0].isTitleChange).toEqual(false);
-            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"20430","name":"Mei Seira"},{"type":"wrestler","id":"3709","name":"Fukigen Death"}]);
+            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"20430","isMainEntity":true,"name":"Mei Seira"},{"type":"wrestler","id":"3709","isMainEntity":true,"name":"Fukigen Death"}]);
 
 
             testSinglesMatchHTML = `<div class="TableContents">
@@ -339,8 +339,8 @@ describe('ScraperManager', () => {
             expect(matches.length).toEqual(1);
             expect(matches[0].date).toEqual("02.03.2025");
             expect(matches[0].promotions).toEqual(['Pro Wrestling NOAH']);
-            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"27318","name":"OZAWA"}]);
-            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"5153","name":"Manabu Soya"}]);
+            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"27318","isMainEntity":true,"name":"OZAWA"}]);
+            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"5153","isMainEntity":true,"name":"Manabu Soya"}]);
             expect(matches[0].duration).toEqual("23:08");
             expect(matches[0].eventType).toEqual('Online Stream');
             expect(matches[0].event).toEqual('NOAH Memorial Voyage In Yokohama ~ NOAH Jr. Tag League 2025 ~');
@@ -350,7 +350,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([{"id":"140","name":"GHC Heavyweight Title"},{"id":"4394","name":"GHC National Title"}]);
             expect(matches[0].matchType).toEqual('Lumberjack Death');
             expect(matches[0].isTitleChange).toEqual(true);
-            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"27318","name":"OZAWA"},{"type":"wrestler","id":"5153","name":"Manabu Soya"}]);
+            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"27318","isMainEntity":true,"name":"OZAWA"},{"type":"wrestler","id":"5153","isMainEntity":true,"name":"Manabu Soya"}]);
 
             testSinglesMatchHTML = `<div class="TableContents">
             <table class="TBase TableBorderColor">
@@ -380,7 +380,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([{"id":"4578","name":"AEW TNT Title"}]);
             expect(matches[0].matchType).toEqual('');
             expect(matches[0].isTitleChange).toEqual(false);
-            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"20642","name":"Daniel Garcia"},{"type":"wrestler","id":"7142","name":"Adam Cole"}]);
+            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"20642","isMainEntity":true,"name":"Daniel Garcia"},{"type":"wrestler","id":"7142","isMainEntity":true,"name":"Adam Cole"}]);
 
 
             
@@ -405,8 +405,8 @@ describe('ScraperManager', () => {
             expect(matches.length).toEqual(1);
             expect(matches[0].date).toEqual("01.03.2025");
             expect(matches[0].promotions).toEqual(['World Wrestling Entertainment']);
-            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"691","name":"John Cena"}]);
-            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"80","name":"CM Punk"},{"type":"wrestler","id":"16337","name":"Damian Priest"},{"type":"wrestler","id":"2879","name":"Drew McIntyre"},{"type":"wrestler","id":"25777","name":"Logan Paul"},{"type":"wrestler","id":"2250","name":"Seth Rollins"}]);
+            expect(matches[0].winners).toEqual([{"type":"wrestler","id":"691","isMainEntity":true,"name":"John Cena"}]);
+            expect(matches[0].losers).toEqual([{"type":"wrestler","id":"80","isMainEntity":true,"name":"CM Punk"},{"type":"wrestler","id":"16337","isMainEntity":true,"name":"Damian Priest"},{"type":"wrestler","id":"2879","isMainEntity":true,"name":"Drew McIntyre"},{"type":"wrestler","id":"25777","isMainEntity":true,"name":"Logan Paul"},{"type":"wrestler","id":"2250","isMainEntity":true,"name":"Seth Rollins"}]);
             expect(matches[0].duration).toEqual("32:36");
             expect(matches[0].eventType).toEqual('Premium Live Event');
             expect(matches[0].event).toEqual('WWE Elimination Chamber 2025 - Toronto');
@@ -416,7 +416,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([]);
             expect(matches[0].matchType).toEqual('#1 Contendership Elimination Chamber');
             expect(matches[0].isTitleChange).toEqual(false);
-            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"691","name":"John Cena"},{"type":"wrestler","id":"80","name":"CM Punk"},{"type":"wrestler","id":"16337","name":"Damian Priest"},{"type":"wrestler","id":"2879","name":"Drew McIntyre"},{"type":"wrestler","id":"25777","name":"Logan Paul"},{"type":"wrestler","id":"2250","name":"Seth Rollins"}]);
+            expect(matches[0].entities).toEqual([{"type":"wrestler","id":"691","isMainEntity":true,"name":"John Cena"},{"type":"wrestler","id":"80","isMainEntity":true,"name":"CM Punk"},{"type":"wrestler","id":"16337","isMainEntity":true,"name":"Damian Priest"},{"type":"wrestler","id":"2879","isMainEntity":true,"name":"Drew McIntyre"},{"type":"wrestler","id":"25777","isMainEntity":true,"name":"Logan Paul"},{"type":"wrestler","id":"2250","isMainEntity":true,"name":"Seth Rollins"}]);
 
             testMultiMatchHTML = `<div class="TableContents">
             <table class="TBase TableBorderColor">
@@ -434,8 +434,8 @@ describe('ScraperManager', () => {
                 expect(matches.length).toEqual(1);
                 expect(matches[0].date).toEqual("01.03.2025");
                 expect(matches[0].promotions).toEqual(['World Wrestling Entertainment']);
-                expect(matches[0].winners).toEqual([{"type":"wrestler","id":null,"name":"John Cena"}]);
-                expect(matches[0].losers).toEqual([{"type":"wrestler","id":"16337","name":"Damian Priest"},{"type":"wrestler","id":"2879","name":"Drew McIntyre"},{"type":"wrestler","id":"25777","name":"Logan Paul"},{"type":"wrestler","id":"2250","name":"Seth Rollins"},{"type":"wrestler","id":null,"name":"CM Punk"}]);
+                expect(matches[0].winners).toEqual([{"type":"wrestler","id":null,"isMainEntity":true,"name":"John Cena"}]);
+                expect(matches[0].losers).toEqual([{"type":"wrestler","id":"16337","isMainEntity":true,"name":"Damian Priest"},{"type":"wrestler","id":"2879","isMainEntity":true,"name":"Drew McIntyre"},{"type":"wrestler","id":"25777","isMainEntity":true,"name":"Logan Paul"},{"type":"wrestler","id":"2250","isMainEntity":true,"name":"Seth Rollins"},{"type":"wrestler","id":null,"isMainEntity":true,"name":"CM Punk"}]);
                 expect(matches[0].duration).toEqual("32:36");
                 expect(matches[0].eventType).toEqual('Premium Live Event');
                 expect(matches[0].event).toEqual('WWE Elimination Chamber 2025 - Toronto');
@@ -445,7 +445,7 @@ describe('ScraperManager', () => {
                 expect(matches[0].titles).toEqual([]);
                 expect(matches[0].matchType).toEqual('#1 Contendership Elimination Chamber');
                 expect(matches[0].isTitleChange).toEqual(false);
-                expect(matches[0].entities).toEqual([{"type":"wrestler","id":"16337","name":"Damian Priest"},{"type":"wrestler","id":"2879","name":"Drew McIntyre"},{"type":"wrestler","id":"25777","name":"Logan Paul"},{"type":"wrestler","id":"2250","name":"Seth Rollins"},{"type":"wrestler","id":null,"name":"John Cena"},{"type":"wrestler","id":null,"name":"CM Punk"}]);
+                expect(matches[0].entities).toEqual([{"type":"wrestler","id":"16337","isMainEntity":true,"name":"Damian Priest"},{"type":"wrestler","id":"2879","isMainEntity":true,"name":"Drew McIntyre"},{"type":"wrestler","id":"25777","isMainEntity":true,"name":"Logan Paul"},{"type":"wrestler","id":"2250","isMainEntity":true,"name":"Seth Rollins"},{"type":"wrestler","id":null,"isMainEntity":true,"name":"John Cena"},{"type":"wrestler","id":null,"isMainEntity":true,"name":"CM Punk"}]);
     });
 
     it('should extract teams',()=>{
@@ -465,8 +465,8 @@ describe('ScraperManager', () => {
             expect(matches.length).toEqual(1);
             expect(matches[0].date).toEqual("05.03.2025");
             expect(matches[0].promotions).toEqual(['Dragongate Japan Pro-Wrestling']);
-            expect(matches[0].winners).toEqual([{"type":"stable","id":"3107","name":"Z-Brats","members":[{"type":"wrestler","id":"26367","name":"ISHIN"},{"type":"wrestler","id":"26802","name":"Yoshiki Kato"}]}]);
-            expect(matches[0].losers).toEqual([{"type":"stable","id":"3126","name":"GOLD CLASS","members":[{"type":"wrestler","id":"21942","name":"JACKY KAMEI"},{"type":"wrestler","id":"26300","name":"Riiita"}]}]);
+            expect(matches[0].winners).toEqual([{"type":"stable","id":"3107","isMainEntity":true,"name":"Z-Brats","members":[{"type":"wrestler","id":"26367","name":"ISHIN"},{"type":"wrestler","id":"26802","name":"Yoshiki Kato"}]}]);
+            expect(matches[0].losers).toEqual([{"type":"stable","id":"3126","name":"GOLD CLASS","isMainEntity":true,"members":[{"type":"wrestler","id":"21942","name":"JACKY KAMEI"},{"type":"wrestler","id":"26300","name":"Riiita"}]}]);
             expect(matches[0].duration).toEqual("8:35");
             expect(matches[0].eventType).toEqual('Event');
             expect(matches[0].event).toEqual('DG Rey De Parejas 2025 - Tag 3');
@@ -476,7 +476,7 @@ describe('ScraperManager', () => {
             expect(matches[0].titles).toEqual([]);
             expect(matches[0].matchType).toEqual('Rey De Parejas 2025 Block A');
             expect(matches[0].isTitleChange).toEqual(false);
-            expect(matches[0].entities).toEqual([{"type":"stable","id":"3107","name":"Z-Brats","members":[{"type":"wrestler","id":"26367","name":"ISHIN"},{"type":"wrestler","id":"26802","name":"Yoshiki Kato"}]},{"type":"wrestler","id":"26367","name":"ISHIN"},{"type":"wrestler","id":"26802","name":"Yoshiki Kato"},{"type":"stable","id":"3126","name":"GOLD CLASS","members":[{"type":"wrestler","id":"21942","name":"JACKY KAMEI"},{"type":"wrestler","id":"26300","name":"Riiita"}]},{"type":"wrestler","id":"21942","name":"JACKY KAMEI"},{"type":"wrestler","id":"26300","name":"Riiita"}]);
+            expect(matches[0].entities).toEqual([{"type":"stable","id":"3107","isMainEntity":true,"name":"Z-Brats","members":[{"type":"wrestler","id":"26367","name":"ISHIN"},{"type":"wrestler","id":"26802","name":"Yoshiki Kato"}]},{"type":"wrestler","id":"26367","name":"ISHIN"},{"type":"wrestler","id":"26802","name":"Yoshiki Kato"},{"type":"stable","id":"3126","isMainEntity":true,"name":"GOLD CLASS","members":[{"type":"wrestler","id":"21942","name":"JACKY KAMEI"},{"type":"wrestler","id":"26300","name":"Riiita"}]},{"type":"wrestler","id":"21942","name":"JACKY KAMEI"},{"type":"wrestler","id":"26300","name":"Riiita"}]);
 
             testTeamMatchHTML = `<div class="TableContents">
             <table class="TBase TableBorderColor">
@@ -498,6 +498,7 @@ describe('ScraperManager', () => {
                     "id": null,
                     "type": "team",
                     "name": "Powerhouse Hobbs, The Conglomeration (Mark Briscoe & Orange Cassidy) & Will Ospreay",
+                    "isMainEntity":true,
                     "members": [
                         {
                             "type": "wrestler",
@@ -533,6 +534,7 @@ describe('ScraperManager', () => {
                 {
                     "id": null,
                     "type": "team",
+                    "isMainEntity":true,
                     "name": "Bryan Keith & The Don Callis Family (Brian Cage, Lance Archer & Mark Davis)",
                     "members": [
                         {
@@ -658,6 +660,7 @@ describe('ScraperManager', () => {
                     "id": null,
                     "type": "team",
                     "name": "Powerhouse Hobbs, The Conglomeration (Mark Briscoe & Orange Cassidy) & Will Ospreay",
+                    "isMainEntity":true,
                     "members": [
                         {
                             "type": "wrestler",
@@ -692,6 +695,7 @@ describe('ScraperManager', () => {
                     "id": null,
                     "type": "team",
                     "name": "Bryan Keith & The Don Callis Family (Brian Cage, Lance Archer & Mark Davis)",
+                    "isMainEntity":true,
                     "members": [
                         {
                             "type": "wrestler",
@@ -744,6 +748,7 @@ describe('ScraperManager', () => {
                     "type": "stable",
                     "id": "4369",
                     "name": "The Opps",
+                    "isMainEntity":true,
                     "members": [
                         {
                             "type": "wrestler",
@@ -767,6 +772,7 @@ describe('ScraperManager', () => {
                 "id": null,
                 "type": "team",
                 "name": "Jack Banning, Starboy Charlie & Titus Alexander",
+                "isMainEntity":true,
                 "members": [
                     {
                         "type": "wrestler",
@@ -799,6 +805,7 @@ describe('ScraperManager', () => {
                     "type": "stable",
                     "id": "4369",
                     "name": "The Opps",
+                    "isMainEntity":true,
                     "members": [
                         {
                             "type": "wrestler",
@@ -852,6 +859,7 @@ describe('ScraperManager', () => {
                     "id": null,
                     "type": "team",
                     "name": "Jack Banning, Starboy Charlie & Titus Alexander",
+                    "isMainEntity":true,
                     "members": [
                         {
                             "type": "wrestler",
@@ -891,6 +899,7 @@ describe('ScraperManager', () => {
                 "id": null,
                 "type": "team",
                 "name": "Ikuto Hidaka & Itsuki Aoki",
+                "isMainEntity":true,
                 "members": [
                     {
                         "type": "wrestler",
@@ -908,6 +917,7 @@ describe('ScraperManager', () => {
                 "type": "team",
                 "id": "9035",
                 "name": "galaxyPunch!",
+                "isMainEntity":true,
                 "members": [
                     {
                         "type": "wrestler",
@@ -925,6 +935,7 @@ describe('ScraperManager', () => {
                 "type": "team",
                 "id": "9714",
                 "name": "SPiCEAP",
+                "isMainEntity":true,
                 "members": [
                     {
                         "type": "wrestler",
@@ -961,6 +972,7 @@ describe('ScraperManager', () => {
                 "type": "team",
                 "id": "9035",
                 "name": "galaxyPunch!",
+                "isMainEntity":true,
                 "members": [
                     {
                         "type": "wrestler",
@@ -988,6 +1000,7 @@ describe('ScraperManager', () => {
                 "type": "team",
                 "id": "9714",
                 "name": "SPiCEAP",
+                "isMainEntity":true,
                 "members": [
                     {
                         "type": "wrestler",
@@ -1015,6 +1028,7 @@ describe('ScraperManager', () => {
                 "id": null,
                 "type": "team",
                 "name": "Ikuto Hidaka & Itsuki Aoki",
+                "isMainEntity":true,
                 "members": [
                     {
                         "type": "wrestler",
@@ -1048,6 +1062,7 @@ describe('ScraperManager', () => {
                 "type": "team",
                 "id": null,
                 "name": "Colt Cabana",
+                "isMainEntity":true,
                 "members": [
                     {
                         "type": "wrestler",
@@ -1060,6 +1075,7 @@ describe('ScraperManager', () => {
                 "type": "stable",
                 "id": "3596",
                 "name": "The BackSeat Boyz",
+                "isMainEntity":true,
                 "members": [
                     {
                         "type": "wrestler",
@@ -1092,6 +1108,7 @@ describe('ScraperManager', () => {
                 "type": "stable",
                 "id": "3596",
                 "name": "The BackSeat Boyz",
+                "isMainEntity":true,
                 "members": [
                     {
                         "type": "wrestler",
@@ -1119,6 +1136,7 @@ describe('ScraperManager', () => {
                 "id": null,
                 "type": "team",
                 "name": "Colt Cabana",
+                "isMainEntity":true,
                 "members": [
                     {
                         "type": "wrestler",
@@ -1127,6 +1145,91 @@ describe('ScraperManager', () => {
                     }
                 ]
             }]);
+
+            testTeamMatchHTML = `<div class="TableContents">
+            <table class="TBase TableBorderColor">
+            <tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td>
+            <td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td>
+            <td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td>
+            <td class="THeaderCol TColSeparator">Match</td>
+            <tr class="TRow2"><td class="TCol AlignCenter TextLowlight">616</td><td class="TCol TColSeparator">15.02.2025</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=731"><img src="/site/main/img/ligen/normal/731__2023-.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="Victory Pro Wrestling" title="Victory Pro Wrestling" /></a></td><td class="TCol TColSeparator">
+<span class="MatchType">Kings Of New York Qualifying Beat The Clock: </span><span class="MatchCard">Primadonnas (<a href="?id=2&amp;nr=20855&amp;name=Samwell+Thompson">Samwell Thompson</a> & <a href="?id=2&amp;nr=30331&amp;name=Valerie+Verman">Valerie Verman</a>) vs. <a href="?id=28&amp;nr=13177&amp;name=Skull+And+Bonez">Skull And Bonez</a> (<a href="?id=2&amp;nr=23811&amp;name=Bonez">Bonez</a> & <a href="?id=2&amp;nr=30877&amp;name=Hamlet+Hurtssue">Hamlet Hurtssue</a>) - Draw (8:45)</span><div class="MatchEventLine"><a href="?id=1&amp;nr=419522">VPW Kings Of New York</a> - Event @ Pro Game Athletics in Bay Shore, New York, USA</div></td></tr>
+                </table>
+                </div>`;
+            matches = scraperManager.extractMatches(testTeamMatchHTML);
+            expect(matches.length).toEqual(1);
+            expect(matches[0].date).toEqual("15.02.2025");
+            expect(matches[0].promotions).toEqual(['Victory Pro Wrestling']);
+            expect(matches[0].winners).toEqual([]);
+            expect(matches[0].losers).toEqual([]);
+            expect(matches[0].duration).toEqual("8:45");
+            expect(matches[0].eventType).toEqual('Event');
+            expect(matches[0].event).toEqual('VPW Kings Of New York');
+            expect(matches[0].location).toEqual('Pro Game Athletics in Bay Shore, New York, USA');
+            expect(matches[0].isDraw).toEqual(true);
+            expect(matches[0].isTeam).toEqual(true);
+            expect(matches[0].titles).toEqual([]);
+            expect(matches[0].matchType).toEqual('Kings Of New York Qualifying Beat The Clock');
+            expect(matches[0].isTitleChange).toEqual(false);
+            expect(matches[0].entities).toEqual([
+                {
+                    "type": "wrestler",
+                    "id": "20855",
+                    "name": "Samwell Thompson"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "30331",
+                    "name": "Valerie Verman"
+                },
+                {
+                    "type": "team",
+                    "id": "13177",
+                    "name": "Skull And Bonez",
+                    "members": [
+                        {
+                            "type": "wrestler",
+                            "id": "23811",
+                            "name": "Bonez"
+                        },
+                        {
+                            "type": "wrestler",
+                            "id": "30877",
+                            "name": "Hamlet Hurtssue"
+                        }
+                    ],
+                    "isMainEntity": true
+                },
+                {
+                    "type": "wrestler",
+                    "id": "23811",
+                    "name": "Bonez"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "30877",
+                    "name": "Hamlet Hurtssue"
+                },
+                {
+                    "type": "team",
+                    "id": null,
+                    "name": "Primadonnas",
+                    "members": [
+                        {
+                            "type": "wrestler",
+                            "id": "20855",
+                            "name": "Samwell Thompson"
+                        },
+                        {
+                            "type": "wrestler",
+                            "id": "30331",
+                            "name": "Valerie Verman"
+                        }
+                    ],
+                    "isMainEntity": true
+                }
+            ]);
+
     });
 
     it('should not extract details about the result', ()=>{
@@ -1160,6 +1263,7 @@ describe('ScraperManager', () => {
             "type": "stable",
             "id": "4100",
             "name": "PARADOX",
+            "isMainEntity":true,
             "members": [
                 {
                     "type": "wrestler",
@@ -1197,6 +1301,7 @@ describe('ScraperManager', () => {
             "type": "stable",
             "id": "3107",
             "name": "Z-Brats",
+            "isMainEntity":true,
             "members": [
                 {
                     "type": "wrestler",
@@ -1245,8 +1350,8 @@ describe('ScraperManager', () => {
         expect(matches.length).toEqual(1);
         expect(matches[0].date).toEqual("04.03.2025");
         expect(matches[0].promotions).toEqual(['Consejo Mundial De Lucha Libre']);
-        expect(matches[0].winners).toEqual([{"type":"wrestler","id":"28129","name":"Zandokan Jr."}]);
-        expect(matches[0].losers).toEqual([{"type":"wrestler","id":"5593","name":"Valiente"}]);
+        expect(matches[0].winners).toEqual([{"type":"wrestler","id":"28129","isMainEntity":true,"name":"Zandokan Jr."}]);
+        expect(matches[0].losers).toEqual([{"type":"wrestler","id":"5593","isMainEntity":true,"name":"Valiente"}]);
         expect(matches[0].duration).toEqual("6:57");
         expect(matches[0].eventType).toEqual('Online Stream');
         expect(matches[0].event).toEqual('CMLL Martes Populares');
@@ -1256,7 +1361,7 @@ describe('ScraperManager', () => {
         expect(matches[0].titles).toEqual([]);
         expect(matches[0].matchType).toEqual('Lightning');
         expect(matches[0].isTitleChange).toEqual(false);
-        expect(matches[0].entities).toEqual([{"type":"wrestler","id":"28129","name":"Zandokan Jr."},{"type":"wrestler","id":"5593","name":"Valiente"}]);
+        expect(matches[0].entities).toEqual([{"type":"wrestler","id":"28129","isMainEntity":true,"name":"Zandokan Jr."},{"type":"wrestler","id":"5593","isMainEntity":true,"name":"Valiente"}]);
 
 
     });
@@ -1277,8 +1382,8 @@ describe('ScraperManager', () => {
         expect(matches.length).toEqual(1);
         expect(matches[0].date).toEqual("02.03.2025");
         expect(matches[0].promotions).toEqual(['National Wrestling Alliance', 'PROject codename: WRESTLING']);
-        expect(matches[0].winners).toEqual([{"type":"wrestler","id":"20173","name":"Kerr"}]);
-        expect(matches[0].losers).toEqual([{"type":"wrestler","id":"12243","name":"Rex Lawless"},{"type":"wrestler","id":null,"name":"Himi Hendrix"}]);
+        expect(matches[0].winners).toEqual([{"type":"wrestler","id":"20173","isMainEntity":true,"name":"Kerr"}]);
+        expect(matches[0].losers).toEqual([{"type":"wrestler","id":"12243","isMainEntity":true,"name":"Rex Lawless"},{"type":"wrestler","id":null,"isMainEntity":true,"name":"Himi Hendrix"}]);
         expect(matches[0].duration).toEqual("");
         expect(matches[0].eventType).toEqual('Event');
         expect(matches[0].event).toEqual('NWA/PROject codename: WRESTLING NWA On Tour!');
@@ -1288,7 +1393,7 @@ describe('ScraperManager', () => {
         expect(matches[0].titles).toEqual([]);
         expect(matches[0].matchType).toEqual('Three Way');
         expect(matches[0].isTitleChange).toEqual(false);
-        expect(matches[0].entities).toEqual([{"type":"wrestler","id":"20173","name":"Kerr"},{"type":"wrestler","id":"12243","name":"Rex Lawless"},{"type":"wrestler","id":null,"name":"Himi Hendrix"}]);
+        expect(matches[0].entities).toEqual([{"type":"wrestler","id":"20173","isMainEntity":true,"name":"Kerr"},{"type":"wrestler","id":"12243","isMainEntity":true,"name":"Rex Lawless"},{"type":"wrestler","id":null,"isMainEntity":true,"name":"Himi Hendrix"}]);
     })
 
 });
