@@ -4,10 +4,11 @@ const fs = require('node:fs/promises');
 
 async function start(){
     const date = new Date();
-    date.setFullYear(2025);
-    date.setMonth(1);
-    date.setDate(15);
+    date.setFullYear(2024);
+    date.setMonth(2);
+    date.setDate(16);
     const cagematchScraper = new CagematchScraper();
+    cagematchScraper.setIsVerbose(true);
     const totalMatches = await cagematchScraper.extractMatchesByDate(date);
     try {
         const content ="[" + totalMatches.map(match => JSON.stringify(match)).join(',\n') + "]";
@@ -16,7 +17,7 @@ async function start(){
         console.log(err);
     }
     const requestManager = new RequestManager('https://www.cagematch.net');
-    const matchesHTML = await requestManager.getMatchesByDate(date,6);
+    const matchesHTML = await requestManager.getMatchesByDate(date,7);
     try {
         await fs.writeFile('matches.html', matchesHTML);
     } catch (err) {
