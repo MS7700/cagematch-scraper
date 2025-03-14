@@ -5,8 +5,8 @@ const fs = require('node:fs/promises');
 async function start(){
     const date = new Date();
     date.setFullYear(2024);
-    date.setMonth(2);
-    date.setDate(16);
+    date.setMonth(11);
+    date.setDate(1);
     const cagematchScraper = new CagematchScraper();
     cagematchScraper.setIsVerbose(true);
     const totalMatches = await cagematchScraper.extractMatchesByDate(date);

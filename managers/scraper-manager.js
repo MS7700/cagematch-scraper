@@ -35,10 +35,10 @@ class ScraperManager {
     */
     const cleanMatchesText = function (text) {
       return text.replaceAll(" (c)", "") // Example A vs B (c)
-        .replaceAll(/\(\d{1,2}:\d{2}\)/g, "") // Example A vs B (10:00)
+        .replaceAll(/\(\d{1,}:\d{1,}\)/g, "") // Example A vs B (10:00)
         .replaceAll(/\s-\s.*$/g, "") // Example A vs B - Double Count Out
         .replaceAll(/\sby\s.*$/g, "") // Example A vs B by DQ
-        .replaceAll(/\s*\[\d{1,2}:\d{1,2}\]\s*/g, "") // Example A vs B [2:1]
+        .replaceAll(/\s*\[\d{1,}:\d{1,}\]\s*/g, "") // Example A vs B [2:1]
         .replaceAll(/\s*\[[^\]]*?\]/g, "") // Example A [1] vs B [2]
         .trim();
     }
@@ -133,6 +133,10 @@ class ScraperManager {
       // Extract match duration if available
       const matchText = matchCard.textContent;
       if (!matchText.includes(" defeats ") && !matchText.includes(" defeat ") && !matchText.includes(" vs. ")) {
+        logger("Match couldn't be scraped because of bad format: " + matchText, "error", section, this.isVerbose);
+        continue;
+      }
+      if (Array.from(matchText.matchAll(/\sdefeats?\s/g)).length > 1) {
         logger("Match couldn't be scraped because of bad format: " + matchText, "error", section, this.isVerbose);
         continue;
       }
