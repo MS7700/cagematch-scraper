@@ -1396,5 +1396,34 @@ describe('ScraperManager', () => {
         expect(matches[0].entities).toEqual([{"type":"wrestler","id":"20173","isMainEntity":true,"name":"Kerr"},{"type":"wrestler","id":"12243","isMainEntity":true,"name":"Rex Lawless"},{"type":"wrestler","id":null,"isMainEntity":true,"name":"Himi Hendrix"}]);
     })
 
+    it('should extract multiple winners',() => {
+        let testMatchHTML = `<div class="TableContents">
+            <table class="TBase TableBorderColor">
+            <tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td>
+            <td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td>
+            <td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td>
+            <td class="THeaderCol TColSeparator">Match</td>
+            <tr class="TRow1 TRowTVShow"><td class="TCol AlignCenter TextLowlight">11</td><td class="TCol TColSeparator">19.03.2025</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=2287"><img src="/site/main/img/ligen/normal/2287_AEW Dynamite_20240306-.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="All Elite Wrestling" title="All Elite Wrestling" /></a></td><td class="TCol TColSeparator">
+<span class="MatchType"><a href="?id=5&amp;nr=5424">AEW International Title</a> Eliminator Tournament Final Four Way: </span><span class="MatchCard"><a href="?id=2&amp;nr=12214&amp;name=Mike+Bailey">Mike Bailey</a> and <a href="?id=2&amp;nr=3827&amp;name=Ricochet">Ricochet</a> defeat <a href="?id=2&amp;nr=11545&amp;name=Mark+Davis">Mark Davis</a> and <a href="?id=2&amp;nr=2813&amp;name=Orange+Cassidy">Orange Cassidy</a> (17:57)</span><div class="MatchEventLine"><a href="?id=1&amp;nr=417754">AEW Dynamite #285</a> - TV-Show @ Liberty First Credit Union Arena in Omaha, Nebraska, USA</div></td></tr>                </table>
+                </div>`;
+        const scraperManager = new ScraperManager();
+        let matches = scraperManager.extractMatches(testMatchHTML);
+        expect(matches.length).toEqual(1);
+        expect(matches[0].date).toEqual("19.03.2025");
+        expect(matches[0].promotions).toEqual(['All Elite Wrestling']);
+        expect(matches[0].winners).toEqual([{"type":"wrestler","id":"12214","isMainEntity":true,"name":"Mike Bailey"},{"type":"wrestler","id":"3827","isMainEntity":true,"name":"Ricochet"}]);
+        expect(matches[0].losers).toEqual([{"type":"wrestler","id":"11545","isMainEntity":true,"name":"Mark Davis"},{"type":"wrestler","id":"2813","isMainEntity":true,"name":"Orange Cassidy"}]);
+        expect(matches[0].duration).toEqual("17:57");  
+        expect(matches[0].eventType).toEqual('TV-Show');
+        expect(matches[0].event).toEqual('AEW Dynamite #285');
+        expect(matches[0].location).toEqual('Liberty First Credit Union Arena in Omaha, Nebraska, USA');
+        expect(matches[0].isDraw).toEqual(false);
+        expect(matches[0].isTeam).toEqual(false);
+        expect(matches[0].titles).toEqual([]);
+        expect(matches[0].matchType).toEqual('Eliminator Tournament Final Four Way');
+        expect(matches[0].isTitleChange).toEqual(false);
+        expect(matches[0].entities).toEqual([{"type":"wrestler","id":"12214","isMainEntity":true,"name":"Mike Bailey"},{"type":"wrestler","id":"3827","isMainEntity":true,"name":"Ricochet"},{"type":"wrestler","id":"11545","isMainEntity":true,"name":"Mark Davis"},{"type":"wrestler","id":"2813","isMainEntity":true,"name":"Orange Cassidy"}]);
+    })
+
 });
 

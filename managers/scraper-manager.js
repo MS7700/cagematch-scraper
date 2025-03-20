@@ -242,19 +242,24 @@ class ScraperManager {
         const separator = matchText.includes(" defeats ") ? " defeats " : " defeat ";
         const winnerText = cleanMatchesText(matchText.split(separator)[0]);
         const loserText = cleanMatchesText(matchText.split(separator)[1]);
-        if (!entities.some(e => e.name === winnerText)) {
-          entities.push({
-            id: null,
-            type: "wrestler",
-            isMainEntity: true,
-            name: winnerText
-          });
-        } else{
-          const wrestler = entities.find(e => e.name === winnerText && e.type === "wrestler");
-          if (wrestler) {
-            wrestler.isMainEntity = true;
+
+        const winnerNames = winnerText.split(" and ").map(l => l.trim());
+        for (let j = 0; j < winnerNames.length; j++) {
+          if (!entities.some(e => e.name === winnerNames[j])) {
+            entities.push({
+              id: null,
+              type: "wrestler",
+              isMainEntity: true,
+              name: winnerNames[j]
+            });
+          } else{
+            const wrestler = entities.find(e => e.name === winnerNames[j] && e.type === "wrestler");
+            if (wrestler) {
+              wrestler.isMainEntity = true;
+            }
           }
         }
+
         const losersNames = loserText.split(" and ").map(l => l.trim());
         for (let j = 0; j < losersNames.length; j++) {
           if (!entities.some(e => e.name === losersNames[j])) {
@@ -277,50 +282,59 @@ class ScraperManager {
         const winnerText = cleanMatchesText(matchText.split(separator)[0]);
         const loserText = cleanMatchesText(matchText.split(separator)[1]);
 
-        const winners = splitWithParenthesisHandling(winnerText);
-        if (winners.length == 1 && winnerText.match(/^[^,&]*\(.*\)$/)) {
-          const team = createTeamFromText(winnerText, entities);
-          if (team && team.id != null) {
-            team.isMainEntity = true;
-          }
-          if (team && team.id === null) {
-            entities.push(team);
-          }
-        } else if (winners.length == 1 && !winnerText.match(/^[^,&]*\(.*\)$/)) {
-          const wrestler = createWrestlerFromText(winnerText, entities);
-          entities.push({
-            id: null,
-            type: "team",
-            isMainEntity: true,
-            name: winnerText,
-            members: [wrestler]
-          });
-        } else if (winners.length > 1) {
-          const members = [];
-          for (let j = 0; j < winners.length; j++) {
-            const winner = winners[j];
-            if (winner.match(/^[^,&]*\(.*\)$/)) {
-              const team = createTeamFromText(winner, entities);
-              if (team && team.id === null) {
-                entities.push(team);
-              }
-              members.push(team);
-            } else {
-              const wrestler = createWrestlerFromText(winner, entities);
-              members.push(wrestler);
-              if (!entities.some(e => e.name === wrestler.name)) {
-                entities.push(wrestler);
+
+        const winnerNames = winnerText.split(" and ").map(l => l.trim());
+        for (let j = 0; j < winnerNames.length; j++) {
+          const winners = splitWithParenthesisHandling(winnerNames[j]);
+          if (winners.length == 1 && winnerNames[j].match(/^[^,&]*\(.*\)$/)) {
+            const team = createTeamFromText(winnerNames[j], entities);
+            if (team && team.id != null) {
+              team.isMainEntity = true;
+            }
+            if (team && team.id === null) {
+              entities.push(team);
+            }
+          } else if (winners.length == 1 && !winnerNames[j].match(/^[^,&]*\(.*\)$/)) {
+            const wrestler = createWrestlerFromText(winnerNames[j], entities);
+            entities.push({
+              id: null,
+              type: "team",
+              isMainEntity: true,
+              name: winnerNames[j],
+              members: [wrestler]
+            });
+          } else if (winners.length > 1) {
+            const members = [];
+            for (let j = 0; j < winners.length; j++) {
+              const winner = winners[j];
+              if (winner.match(/^[^,&]*\(.*\)$/)) {
+                const team = createTeamFromText(winner, entities);
+                if (team && team.id === null) {
+                  entities.push(team);
+                }
+                members.push(team);
+              } else {
+                const wrestler = createWrestlerFromText(winner, entities);
+                members.push(wrestler);
+                if (!entities.some(e => e.name === wrestler.name)) {
+                  entities.push(wrestler);
+                }
               }
             }
+            entities.push({
+              id: null,
+              type: "team",
+              isMainEntity: true,
+              name: winnerNames[j],
+              members: members
+            });
           }
-          entities.push({
-            id: null,
-            type: "team",
-            isMainEntity: true,
-            name: winnerText,
-            members: members
-          });
         }
+
+
+
+
+        
 
         const losersNames = loserText.split(" and ").map(l => l.trim());
         for (let j = 0; j < losersNames.length; j++) {

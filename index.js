@@ -4,9 +4,9 @@ const fs = require('node:fs/promises');
 
 async function start(){
     const date = new Date();
-    date.setFullYear(2024);
-    date.setMonth(11);
-    date.setDate(1);
+    date.setFullYear(2025);
+    date.setMonth(2);
+    date.setDate(19);
     const cagematchScraper = new CagematchScraper();
     cagematchScraper.setIsVerbose(true);
     const totalMatches = await cagematchScraper.extractMatchesByDate(date);
@@ -17,7 +17,7 @@ async function start(){
         console.log(err);
     }
     const requestManager = new RequestManager('https://www.cagematch.net');
-    const matchesHTML = await requestManager.getMatchesByDate(date,7);
+    const matchesHTML = await requestManager.getMatchesByDate(date,0);
     try {
         await fs.writeFile('matches.html', matchesHTML);
     } catch (err) {
