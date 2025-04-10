@@ -170,6 +170,8 @@ class ScraperManager {
       matchType = matchType.replace(" / ", "").trim();
       // Parse wrestlers and teams
       const entities = [];
+      const winners = [];
+      const losers = [];
       const links = matchCard.querySelectorAll("a");
       // Extract all wrestlers and teams with for loop
       for (let j = 0; j < links.length; j++) {
@@ -246,16 +248,19 @@ class ScraperManager {
         const winnerNames = winnerText.split(" and ").map(l => l.trim());
         for (let j = 0; j < winnerNames.length; j++) {
           if (!entities.some(e => e.name === winnerNames[j])) {
-            entities.push({
+            const entity = {
               id: null,
               type: "wrestler",
               isMainEntity: true,
               name: winnerNames[j]
-            });
+            }
+            entities.push(entity);
+            winners.push(entity);
           } else{
             const wrestler = entities.find(e => e.name === winnerNames[j] && e.type === "wrestler");
             if (wrestler) {
               wrestler.isMainEntity = true;
+              winners.push(wrestler);
             }
           }
         }
@@ -263,16 +268,19 @@ class ScraperManager {
         const losersNames = loserText.split(" and ").map(l => l.trim());
         for (let j = 0; j < losersNames.length; j++) {
           if (!entities.some(e => e.name === losersNames[j])) {
-            entities.push({
+            const entity = {
               id: null,
               type: "wrestler",
               isMainEntity: true,
               name: losersNames[j]
-            });
+            }
+            entities.push(entity);
+            losers.push(entity);
           } else{
             const wrestler = entities.find(e => e.name === losersNames[j] && e.type === "wrestler");
             if (wrestler) {
               wrestler.isMainEntity = true;
+              losers.push(wrestler);
             }
           }
         }
@@ -282,31 +290,33 @@ class ScraperManager {
         const winnerText = cleanMatchesText(matchText.split(separator)[0]);
         const loserText = cleanMatchesText(matchText.split(separator)[1]);
 
-
         const winnerNames = winnerText.split(" and ").map(l => l.trim());
         for (let j = 0; j < winnerNames.length; j++) {
-          const winners = splitWithParenthesisHandling(winnerNames[j]);
-          if (winners.length == 1 && winnerNames[j].match(/^[^,&]*\(.*\)$/)) {
+          const winnersTeam = splitWithParenthesisHandling(winnerNames[j]);
+          if (winnersTeam.length == 1 && winnerNames[j].match(/^[^,&]*\(.*\)$/)) {
             const team = createTeamFromText(winnerNames[j], entities);
             if (team && team.id != null) {
               team.isMainEntity = true;
+              winners.push(team);
             }
             if (team && team.id === null) {
               entities.push(team);
             }
-          } else if (winners.length == 1 && !winnerNames[j].match(/^[^,&]*\(.*\)$/)) {
+          } else if (winnersTeam.length == 1 && !winnerNames[j].match(/^[^,&]*\(.*\)$/)) {
             const wrestler = createWrestlerFromText(winnerNames[j], entities);
-            entities.push({
+            const team = {
               id: null,
               type: "team",
               isMainEntity: true,
               name: winnerNames[j],
               members: [wrestler]
-            });
-          } else if (winners.length > 1) {
+            };
+            entities.push(team);
+            winners.push(team);
+          } else if (winnersTeam.length > 1) {
             const members = [];
-            for (let j = 0; j < winners.length; j++) {
-              const winner = winners[j];
+            for (let j = 0; j < winnersTeam.length; j++) {
+              const winner = winnersTeam[j];
               if (winner.match(/^[^,&]*\(.*\)$/)) {
                 const team = createTeamFromText(winner, entities);
                 if (team && team.id === null) {
@@ -321,13 +331,15 @@ class ScraperManager {
                 }
               }
             }
-            entities.push({
+            const team = {
               id: null,
               type: "team",
               isMainEntity: true,
               name: winnerNames[j],
               members: members
-            });
+            }
+            entities.push(team);
+            winners.push(team);
           }
         }
 
@@ -338,29 +350,32 @@ class ScraperManager {
 
         const losersNames = loserText.split(" and ").map(l => l.trim());
         for (let j = 0; j < losersNames.length; j++) {
-          const losers = splitWithParenthesisHandling(losersNames[j]);
+          const losersTeam = splitWithParenthesisHandling(losersNames[j]);
           const losersName = losersNames[j];
-          if (losers.length == 1 && losersName.match(/^[^,&]*\(.*\)$/)) {
+          if (losersTeam.length == 1 && losersName.match(/^[^,&]*\(.*\)$/)) {
             const team = createTeamFromText(losersName, entities);
             if (team) {
-              team.isMainEntity = true
+              team.isMainEntity = true;
+              losers.push(team);
             }
             if (team && team.id === null) {
               entities.push(team);
             }
-          } else if (losers.length == 1 && !losersName.match(/^[^,&]*\(.*\)$/)) {
+          } else if (losersTeam.length == 1 && !losersName.match(/^[^,&]*\(.*\)$/)) {
             const wrestler = createWrestlerFromText(losersName, entities);
-            entities.push({
+            const team = {
               id: null,
               type: "team",
               isMainEntity: true,
               name: losersName,
               members: [wrestler]
-            });
-          } else if (losers.length > 1) {
+            }
+            entities.push(team);
+            losers.push(team);
+          } else if (losersTeam.length > 1) {
             const members = [];
-            for (let j = 0; j < losers.length; j++) {
-              const winner = losers[j];
+            for (let j = 0; j < losersTeam.length; j++) {
+              const winner = losersTeam[j];
               if (winner.match(/^[^,&]*\(.*\)$/)) {
                 const team = createTeamFromText(winner, entities);
                 if (team && team.id === null) {
@@ -375,13 +390,15 @@ class ScraperManager {
                 }
               }
             }
-            entities.push({
+            const team = {
               id: null,
               type: "team",
               isMainEntity: true,
               name: losersName,
               members: members
-            });
+            }
+            entities.push(team);
+            losers.push(team);
           }
         }
       }
@@ -456,66 +473,65 @@ class ScraperManager {
           }
         }
       }
-      // Determine winners and losers
-      // The pattern is typically "[winners] defeat[s] [losers]"
-      const matchPattern = /(.+?) defeats? (.+?)(\(\d+:\d+\)|$)/i;
-      //const teamMatchPattern = /(.+?) defeat (.+?)(\(\d+:\d+\)|$)/i;
+      // // Determine winners and losers
+      // // The pattern is typically "[winners] defeat[s] [losers]"
+      // const matchPattern = /(.+?) defeats? (.+?)(\(\d+:\d+\)|$)/i;
+      // //const teamMatchPattern = /(.+?) defeat (.+?)(\(\d+:\d+\)|$)/i;
 
-      let winners = [];
-      let losers = [];
-
-
-      // Check for singles match pattern first
-      const singleMatchResult = cleanMatchesText(matchText).match(matchPattern);
-      if (singleMatchResult && !isTeam) {
-        const winnerName = singleMatchResult[1].trim();
-        const loserName = singleMatchResult[2].trim();
+      
 
 
-        // Find winners
-        for (let j = 0; j < entities.length; j++) {
-          if (winnerName.includes(entities[j].name)) {
-            winners.push(entities[j]);
-          }
-        }
+      // // Check for singles match pattern first
+      // const singleMatchResult = cleanMatchesText(matchText).match(matchPattern);
+      // if (singleMatchResult && !isTeam) {
+      //   const winnerName = singleMatchResult[1].trim();
+      //   const loserName = singleMatchResult[2].trim();
 
-        // Find losers
-        for (let j = 0; j < entities.length; j++) {
-          if (loserName.includes(entities[j].name)) {
-            losers.push(entities[j]);
-          }
-        }
-      } else {
-        // Check for team match pattern
-        const teamMatchResult = cleanMatchesText(matchText).match(matchPattern);
-        if (teamMatchResult) {
-          const winnersText = teamMatchResult[1].trim();
-          const losersText = teamMatchResult[2].trim();
-          if (winnersText.match(/^[^,&]*\(.*\)$/)) {
-            const team = createTeamFromText(winnersText, entities);
-            if (team) {
-              winners.push(team);
-            }
-          } else {
-            const team = entities.find(e => e.name === winnersText && (e.type === "team" || e.type === "stable"));
-            winners.push(team);
-          }
 
-          const loserTextList = losersText.split(" and ");
-          for (let j = 0; j < loserTextList.length; j++) {
-            const loserText = loserTextList[j];
-            if (loserText.match(/^[^,&]*\(.*\)$/)) {
-              const team = createTeamFromText(loserText, entities);
-              if (team) {
-                losers.push(team);
-              }
-            } else {
-              const team = entities.find(e => e.name === loserText && (e.type === "team" || e.type === "stable"));
-              losers.push(team);
-            }
-          }
-        }
-      }
+      //   // Find winners
+      //   for (let j = 0; j < entities.length; j++) {
+      //     if (winnerName.includes(entities[j].name)) {
+      //       winners.push(entities[j]);
+      //     }
+      //   }
+
+      //   // Find losers
+      //   for (let j = 0; j < entities.length; j++) {
+      //     if (loserName.includes(entities[j].name)) {
+      //       losers.push(entities[j]);
+      //     }
+      //   }
+      // } else {
+      //   // Check for team match pattern
+      //   const teamMatchResult = cleanMatchesText(matchText).match(matchPattern);
+      //   if (teamMatchResult) {
+      //     const winnersText = teamMatchResult[1].trim();
+      //     const losersText = teamMatchResult[2].trim();
+      //     if (winnersText.match(/^[^,&]*\(.*\)$/)) {
+      //       const team = createTeamFromText(winnersText, entities);
+      //       if (team) {
+      //         winners.push(team);
+      //       }
+      //     } else {
+      //       const team = entities.find(e => e.name === winnersText && (e.type === "team" || e.type === "stable"));
+      //       winners.push(team);
+      //     }
+
+      //     const loserTextList = losersText.split(" and ");
+      //     for (let j = 0; j < loserTextList.length; j++) {
+      //       const loserText = loserTextList[j];
+      //       if (loserText.match(/^[^,&]*\(.*\)$/)) {
+      //         const team = createTeamFromText(loserText, entities);
+      //         if (team) {
+      //           losers.push(team);
+      //         }
+      //       } else {
+      //         const team = entities.find(e => e.name === loserText && (e.type === "team" || e.type === "stable"));
+      //         losers.push(team);
+      //       }
+      //     }
+      //   }
+      // }
 
       // Create the match object
       const match = {

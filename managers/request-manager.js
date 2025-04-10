@@ -32,7 +32,7 @@ class RequestManager {
         } catch(e){
             logger(`Error requesting: ${request.href}`, "error", section, this.isVerbose);
             logger(e, "error", section, this.isVerbose);
-            return null;
+            return undefined;
         }
     }
 }

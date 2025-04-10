@@ -435,7 +435,7 @@ describe('ScraperManager', () => {
                 expect(matches[0].date).toEqual("01.03.2025");
                 expect(matches[0].promotions).toEqual(['World Wrestling Entertainment']);
                 expect(matches[0].winners).toEqual([{"type":"wrestler","id":null,"isMainEntity":true,"name":"John Cena"}]);
-                expect(matches[0].losers).toEqual([{"type":"wrestler","id":"16337","isMainEntity":true,"name":"Damian Priest"},{"type":"wrestler","id":"2879","isMainEntity":true,"name":"Drew McIntyre"},{"type":"wrestler","id":"25777","isMainEntity":true,"name":"Logan Paul"},{"type":"wrestler","id":"2250","isMainEntity":true,"name":"Seth Rollins"},{"type":"wrestler","id":null,"isMainEntity":true,"name":"CM Punk"}]);
+                expect(matches[0].losers).toEqual([{"type":"wrestler","id":null,"isMainEntity":true,"name":"CM Punk"},{"type":"wrestler","id":"16337","isMainEntity":true,"name":"Damian Priest"},{"type":"wrestler","id":"2879","isMainEntity":true,"name":"Drew McIntyre"},{"type":"wrestler","id":"25777","isMainEntity":true,"name":"Logan Paul"},{"type":"wrestler","id":"2250","isMainEntity":true,"name":"Seth Rollins"}]);
                 expect(matches[0].duration).toEqual("32:36");
                 expect(matches[0].eventType).toEqual('Premium Live Event');
                 expect(matches[0].event).toEqual('WWE Elimination Chamber 2025 - Toronto');
@@ -1383,7 +1383,7 @@ describe('ScraperManager', () => {
         expect(matches[0].date).toEqual("02.03.2025");
         expect(matches[0].promotions).toEqual(['National Wrestling Alliance', 'PROject codename: WRESTLING']);
         expect(matches[0].winners).toEqual([{"type":"wrestler","id":"20173","isMainEntity":true,"name":"Kerr"}]);
-        expect(matches[0].losers).toEqual([{"type":"wrestler","id":"12243","isMainEntity":true,"name":"Rex Lawless"},{"type":"wrestler","id":null,"isMainEntity":true,"name":"Himi Hendrix"}]);
+        expect(matches[0].losers).toEqual([{"type":"wrestler","id":null,"isMainEntity":true,"name":"Himi Hendrix"},{"type":"wrestler","id":"12243","isMainEntity":true,"name":"Rex Lawless"}]);
         expect(matches[0].duration).toEqual("");
         expect(matches[0].eventType).toEqual('Event');
         expect(matches[0].event).toEqual('NWA/PROject codename: WRESTLING NWA On Tour!');
@@ -1423,6 +1423,35 @@ describe('ScraperManager', () => {
         expect(matches[0].matchType).toEqual('Eliminator Tournament Final Four Way');
         expect(matches[0].isTitleChange).toEqual(false);
         expect(matches[0].entities).toEqual([{"type":"wrestler","id":"12214","isMainEntity":true,"name":"Mike Bailey"},{"type":"wrestler","id":"3827","isMainEntity":true,"name":"Ricochet"},{"type":"wrestler","id":"11545","isMainEntity":true,"name":"Mark Davis"},{"type":"wrestler","id":"2813","isMainEntity":true,"name":"Orange Cassidy"}]);
+
+        testMatchHTML = `<div class="TableContents">
+            <table class="TBase TableBorderColor">
+            <tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td>
+            <td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td>
+            <td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td>
+            <td class="THeaderCol TColSeparator">Match</td>
+            <tr class="TRow2"><td class="TCol AlignCenter TextLowlight">118</td><td class="TCol TColSeparator">01.01.2025</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=1626"><img src="/site/main/img/ligen/normal/1626.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="Promociones Tao" title="Promociones Tao" /></a></td><td class="TCol TColSeparator">
+<span class="MatchType">Four Way: </span><span class="MatchCard">Anarquista & Kaliper and Diamante Azul Jr. & <a href="?id=2&amp;nr=28928&amp;name=Galactico+Dragon">Galactico Dragon</a> and <a href="?id=2&amp;nr=23800&amp;name=Murcielago+Plateado+Jr.">Murcielago Plateado Jr.</a> & Samuray Azteca defeat Drabek & Pequeno Pony</span><div class="MatchEventLine"><a href="?id=1&amp;nr=417767">Promociones Tao Caera Una Mascara</a> - Event @ Arena Queretaro in Santiago de Queretaro, Queretaro, Mexiko</div></td></tr>                </table>
+                </div>`;
+
+        matches = scraperManager.extractMatches(testMatchHTML);
+        expect(matches.length).toEqual(1);
+        expect(matches[0].date).toEqual("01.01.2025");
+        expect(matches[0].promotions).toEqual(['Promociones Tao']);
+        expect(matches[0].winners).toEqual([{"id":null,"type":"team","isMainEntity":true,"name":"Anarquista & Kaliper","members":[{"id":null,"type":"wrestler","name":"Anarquista"},{"id":null,"type":"wrestler","name":"Kaliper"}]},
+        {"id":null,"type":"team","isMainEntity":true,"name":"Diamante Azul Jr. & Galactico Dragon","members":[{"id":null,"type":"wrestler","name":"Diamante Azul Jr."},{"type":"wrestler","id":"28928","name":"Galactico Dragon"}]},
+        {"id":null,"type":"team","isMainEntity":true,"name":"Murcielago Plateado Jr. & Samuray Azteca","members":[{"type":"wrestler","id":"23800","name":"Murcielago Plateado Jr."},{"id":null,"type":"wrestler","name":"Samuray Azteca"}]}]);
+        expect(matches[0].losers).toEqual([{"id":null,"type":"team","isMainEntity":true,"name":"Drabek & Pequeno Pony","members":[{"id":null,"type":"wrestler","name":"Drabek"},{"id":null,"type":"wrestler","name":"Pequeno Pony"}]}]);
+        expect(matches[0].duration).toEqual("");
+        expect(matches[0].eventType).toEqual('Event');
+        expect(matches[0].event).toEqual('Promociones Tao Caera Una Mascara');
+        expect(matches[0].location).toEqual('Arena Queretaro in Santiago de Queretaro, Queretaro, Mexiko');
+        expect(matches[0].isDraw).toEqual(false);
+        expect(matches[0].isTeam).toEqual(true);
+        expect(matches[0].titles).toEqual([]);
+        expect(matches[0].matchType).toEqual('Four Way');
+        expect(matches[0].isTitleChange).toEqual(false);
+        expect(matches[0].entities).toEqual([{"type":"wrestler","id":"28928","name":"Galactico Dragon"},{"type":"wrestler","id":"23800","name":"Murcielago Plateado Jr."},{"id":null,"type":"wrestler","name":"Anarquista"},{"id":null,"type":"wrestler","name":"Kaliper"},{"id":null,"type":"team","isMainEntity":true,"name":"Anarquista & Kaliper","members":[{"id":null,"type":"wrestler","name":"Anarquista"},{"id":null,"type":"wrestler","name":"Kaliper"}]},{"id":null,"type":"wrestler","name":"Diamante Azul Jr."},{"id":null,"type":"team","isMainEntity":true,"name":"Diamante Azul Jr. & Galactico Dragon","members":[{"id":null,"type":"wrestler","name":"Diamante Azul Jr."},{"type":"wrestler","id":"28928","name":"Galactico Dragon"}]},{"id":null,"type":"wrestler","name":"Samuray Azteca"},{"id":null,"type":"team","isMainEntity":true,"name":"Murcielago Plateado Jr. & Samuray Azteca","members":[{"type":"wrestler","id":"23800","name":"Murcielago Plateado Jr."},{"id":null,"type":"wrestler","name":"Samuray Azteca"}]},{"id":null,"type":"wrestler","name":"Drabek"},{"id":null,"type":"wrestler","name":"Pequeno Pony"},{"id":null,"type":"team","isMainEntity":true,"name":"Drabek & Pequeno Pony","members":[{"id":null,"type":"wrestler","name":"Drabek"},{"id":null,"type":"wrestler","name":"Pequeno Pony"}]}]);
     })
 
 });
