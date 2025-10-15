@@ -1230,6 +1230,124 @@ describe('ScraperManager', () => {
                 }
             ]);
 
+            // Additional check with annotations about the result
+            testTeamMatchHTML = testTeamMatchHTML = `<div class="TableContents">
+            <table class="TBase TableBorderColor">
+            <tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td>
+            <td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td>
+            <td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td>
+            <td class="THeaderCol TColSeparator">Match</td>
+            <tr class="TRow1 TRowTVShow"><td class="TCol AlignCenter TextLowlight">1</td><td class="TCol TColSeparator">07.10.2025</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=2287"><img src="/site/main/img/ligen/normal/2287_AEW Dynamite_20240306-.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="All Elite Wrestling" title="All Elite Wrestling"></a></td><td class="TCol TColSeparator">
+<span class="MatchType"><a href="?id=5&amp;nr=4392">AEW World Tag Team Title</a>  / <a href="?id=5&amp;nr=7466">AEW Unified Title</a> Double Jeopardy Eliminator: </span><span class="MatchCard"><a href="?id=29&amp;nr=3709&amp;name=The+Don+Callis+Family">The Don Callis Family</a> (<a href="?id=2&amp;nr=4324&amp;name=Kazuchika+Okada">Kazuchika Okada</a> [c] &amp; <a href="?id=2&amp;nr=13073&amp;name=Konosuke+Takeshita">Konosuke Takeshita</a>) defeat <a href="?id=28&amp;nr=13860&amp;name=Brodido">Brodido</a> (<a href="?id=2&amp;nr=16339&amp;name=Bandido++">Bandido</a> &amp; <a href="?id=2&amp;nr=18672&amp;name=Brody+King">Brody King</a>) [c] (12:04)</span><div class="MatchEventLine"><a href="?id=1&amp;nr=432062">AEW Dynamite #314 - Title Tuesday 2025</a> - TV-Show @ Daily's Place in Jacksonville, Florida, USA</div></td></tr>
+                </table>
+                </div>`;
+            matches = scraperManager.extractMatches(testTeamMatchHTML);
+            expect(matches.length).toEqual(1);
+            expect(matches[0].date).toEqual("07.10.2025");
+            expect(matches[0].promotions).toEqual(['All Elite Wrestling']);
+            expect(matches[0].winners).toEqual([
+        {
+            "type": "stable",
+            "id": "3709",
+            "name": "The Don Callis Family",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "4324",
+                    "name": "Kazuchika Okada"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "13073",
+                    "name": "Konosuke Takeshita"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+            expect(matches[0].losers).toEqual([
+        {
+            "type": "team",
+            "id": "13860",
+            "name": "Brodido",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "16339",
+                    "name": "Bandido"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "18672",
+                    "name": "Brody King"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+            expect(matches[0].isDraw).toEqual(false);
+            expect(matches[0].isTeam).toEqual(true);
+            expect(matches[0].titles).toEqual([]);
+            expect(matches[0].isTitleChange).toEqual(false);
+            expect(matches[0].entities).toEqual([
+        {
+            "type": "stable",
+            "id": "3709",
+            "name": "The Don Callis Family",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "4324",
+                    "name": "Kazuchika Okada"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "13073",
+                    "name": "Konosuke Takeshita"
+                }
+            ],
+            "isMainEntity": true
+        },
+        {
+            "type": "wrestler",
+            "id": "4324",
+            "name": "Kazuchika Okada"
+        },
+        {
+            "type": "wrestler",
+            "id": "13073",
+            "name": "Konosuke Takeshita"
+        },
+        {
+            "type": "team",
+            "id": "13860",
+            "name": "Brodido",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "16339",
+                    "name": "Bandido"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "18672",
+                    "name": "Brody King"
+                }
+            ],
+            "isMainEntity": true
+        },
+        {
+            "type": "wrestler",
+            "id": "16339",
+            "name": "Bandido"
+        },
+        {
+            "type": "wrestler",
+            "id": "18672",
+            "name": "Brody King"
+        }
+    ]);
+
     });
 
     it('should not extract details about the result', ()=>{
