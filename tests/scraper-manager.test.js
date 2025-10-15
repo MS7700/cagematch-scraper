@@ -1231,7 +1231,7 @@ describe('ScraperManager', () => {
             ]);
 
             // Additional check with annotations about the result
-            testTeamMatchHTML = testTeamMatchHTML = `<div class="TableContents">
+            testTeamMatchHTML = `<div class="TableContents">
             <table class="TBase TableBorderColor">
             <tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td>
             <td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td>
