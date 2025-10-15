@@ -50,7 +50,7 @@ class ScraperManager {
      * @returns 
      */
     const createWrestlerFromText = function (text, entities) {
-      const wrestlerName = text.trim();
+      const wrestlerName = cleanMatchesText(text.trim());
       if (!entities.some(e => e.name === wrestlerName && e.type === "wrestler")) {
         const wrestler = {
           id: null,
@@ -180,7 +180,7 @@ class ScraperManager {
         const params = new URLSearchParams(href.substring(1));
         const id = params.get("id");
         const nr = params.get("nr");
-        const name = link.textContent.trim();
+        const name = cleanMatchesText(link.textContent.trim());
 
         // Check if this is a wrestler (id=2), team (id=28) or faction (id=29)
         if (id === "2") {
@@ -203,7 +203,7 @@ class ScraperManager {
             const memberNames = membersString.split(/&|,/);
 
             for (let k = 0; k < memberNames.length; k++) {
-              const memberName = memberNames[k].trim();
+              const memberName = cleanMatchesText(memberNames[k].trim());
               let memberId = null;
 
               // Find the wrestler object that matches this name
