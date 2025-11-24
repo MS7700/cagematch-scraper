@@ -1348,6 +1348,124 @@ describe('ScraperManager', () => {
         }
     ]);
 
+    testTeamMatchHTML = `<div class="TableContents">
+            <table class="TBase TableBorderColor">
+            <tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td>
+            <td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td>
+            <td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td>
+            <td class="THeaderCol TColSeparator">Match</td>
+            <tr class="TRow2 TRowTVShow"><td class="TCol AlignCenter TextLowlight">46</td><td class="TCol TColSeparator">22.11.2025</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=2287"><img src="/site/main/img/ligen/normal/2287_AEW Collision.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="All Elite Wrestling" title="All Elite Wrestling"></a></td><td class="TCol TColSeparator">
+<span class="MatchCard">Boom And Doom (<a href="?id=2&amp;nr=30329&amp;name=Big+Boom+AJ">Big Boom AJ</a> &amp; <a href="?id=2&amp;nr=7870&amp;name=QT+Marshall">QT Marshall</a>) defeat <a href="?id=28&amp;nr=5813&amp;name=RPG+VICE">RPG VICE</a> (<a href="?id=2&amp;nr=254&amp;name=Rocky+Romero">Rocky Romero</a> &amp; <a href="?id=2&amp;nr=2963&amp;name=Trent+Beretta">Trent Beretta</a>) (11:57)</span><div class="MatchEventLine"><a href="?id=1&amp;nr=438297">AEW Collision #120 - Saturday Tailgate Brawl: Full Gear</a> - TV-Show @ Prudential Center in Newark, New Jersey, USA</div></td></tr>
+                </table>
+                </div>`;
+
+            matches = scraperManager.extractMatches(testTeamMatchHTML);
+            expect(matches.length).toEqual(1);
+            expect(matches[0].date).toEqual("22.11.2025");
+            expect(matches[0].promotions).toEqual(['All Elite Wrestling']);
+            expect(matches[0].winners).toEqual([
+        {
+            "type": "team",
+            "id": null,
+            "name": "Boom And Doom",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "30329",
+                    "name": "Big Boom AJ"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "7870",
+                    "name": "QT Marshall"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+            expect(matches[0].losers).toEqual([
+        {
+            "type": "team",
+            "id": "5813",
+            "name": "RPG VICE",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "254",
+                    "name": "Rocky Romero"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "2963",
+                    "name": "Trent Beretta"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+            expect(matches[0].isDraw).toEqual(false);
+            expect(matches[0].isTeam).toEqual(true);
+            expect(matches[0].titles).toEqual([]);
+            expect(matches[0].isTitleChange).toEqual(false);
+            expect(matches[0].entities).toEqual([
+        {
+            "type": "wrestler",
+            "id": "30329",
+            "name": "Big Boom AJ"
+        },
+        {
+            "type": "wrestler",
+            "id": "7870",
+            "name": "QT Marshall"
+        },
+        {
+            "type": "team",
+            "id": "5813",
+            "name": "RPG VICE",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "254",
+                    "name": "Rocky Romero"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "2963",
+                    "name": "Trent Beretta"
+                }
+            ],
+            "isMainEntity": true
+        },
+        {
+            "type": "wrestler",
+            "id": "254",
+            "name": "Rocky Romero"
+        },
+        {
+            "type": "wrestler",
+            "id": "2963",
+            "name": "Trent Beretta"
+        },
+        {
+            "type": "team",
+            "id": null,
+            "name": "Boom And Doom",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "30329",
+                    "name": "Big Boom AJ"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "7870",
+                    "name": "QT Marshall"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+
     });
 
     it('should not extract details about the result', ()=>{

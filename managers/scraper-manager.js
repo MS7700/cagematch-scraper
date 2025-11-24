@@ -295,7 +295,7 @@ class ScraperManager {
           const winnersTeam = splitWithParenthesisHandling(winnerNames[j]);
           if (winnersTeam.length == 1 && winnerNames[j].match(/^[^,&]*\(.*\)$/)) {
             const team = createTeamFromText(winnerNames[j], entities);
-            if (team && team.id != null) {
+            if (team) {
               team.isMainEntity = true;
               winners.push(team);
             }
