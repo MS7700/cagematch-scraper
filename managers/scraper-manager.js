@@ -85,6 +85,10 @@ class ScraperManager {
           for (let k = 0; k < memberNames.length; k++) {
             const memberName = memberNames[k].trim();
             const member = createWrestlerFromText(memberName, entities);
+
+            if (!entities.some(e => e.name === member.name && e.type === "wrestler")) {
+              entities.push(member);
+            } 
             members.push(member);
           }
         }
@@ -223,11 +227,11 @@ class ScraperManager {
                   name: memberName
                 });
               } else {
-                members.push({
-                  type: "wrestler",
-                  id: null,
-                  name: memberName
-                });
+                const wrestler = createWrestlerFromText(memberName, entities);
+                if (!entities.some(e => e.name === wrestler.name && e.type === "wrestler")) {
+                  entities.push(wrestler);
+                }
+                members.push(wrestler);
               }
             }
           }
