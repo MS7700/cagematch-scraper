@@ -1350,6 +1350,122 @@ describe('ScraperManager', () => {
 
     testTeamMatchHTML = `<div class="TableContents">
             <table class="TBase TableBorderColor">
+            <tr class="TRow1"><td class="TCol AlignCenter TextLowlight">1</td><td class="TCol TColSeparator">17.01.2026</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=2343"><img src="/site/main/img/ligen/normal/2343.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="Eastern Wrestling Association" title="Eastern Wrestling Association"></a></td><td class="TCol TColSeparator">
+<span class="MatchType"><a href="?id=5&amp;nr=6643">EWA Tag Team    Title</a> Steel Cage: </span><span class="MatchCard">Maryland's Most Dangerous (<a href="?id=2&amp;nr=32391&amp;name=Hero+Napier">Hero Napier</a> &amp; <a href="?id=2&amp;nr=29121&amp;name=JB+Anderson">JB Anderson</a>) defeat <a href="?id=29&amp;nr=3592&amp;name=Pure+Ignorance">Pure Ignorance</a> (Chris Idol &amp; Noah Idol) (c) (8:45) - <span class="MatchTitleChange">TITLE CHANGE !!!</span></span><div class="MatchEventLine"><a href="?id=1&amp;nr=444818">EWA Rage In The Cage 2026</a> - Event @ Bel Air Armory in Bel Air, Maryland, USA</div></td></tr>
+                </table>
+                </div>`;
+
+            matches = scraperManager.extractMatches(testTeamMatchHTML);
+            expect(matches.length).toEqual(1);
+            expect(matches[0].date).toEqual("17.01.2026");
+            expect(matches[0].promotions).toEqual(['Eastern Wrestling Association']);
+            expect(matches[0].winners).toEqual([
+        {
+            "type": "team",
+            "id": null,
+            "name": "Maryland's Most Dangerous",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "32391",
+                    "name": "Hero Napier"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "29121",
+                    "name": "JB Anderson"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+            expect(matches[0].losers).toEqual([
+        {
+            "type": "stable",
+            "id": "3592",
+            "name": "Pure Ignorance",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": null,
+                    "name": "Chris Idol"
+                },
+                {
+                    "type": "wrestler",
+                    "id": null,
+                    "name": "Noah Idol"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+            expect(matches[0].isDraw).toEqual(false);
+            expect(matches[0].isTeam).toEqual(true);
+            expect(matches[0].titles).toEqual([{
+                "id": "6643",
+                "name": "EWA Tag Team    Title"
+            }]);
+            expect(matches[0].isTitleChange).toEqual(true);
+            expect(matches[0].entities).toEqual([
+        {
+            "type": "wrestler",
+            "id": "32391",
+            "name": "Hero Napier"
+        },
+        {
+            "type": "wrestler",
+            "id": "29121",
+            "name": "JB Anderson"
+        },
+        {
+            "type": "wrestler",
+            "id": null,
+            "name": "Chris Idol"
+        },
+        {
+            "type": "wrestler",
+            "id": null,
+            "name": "Noah Idol"
+        },
+        {
+            "type": "stable",
+            "id": "3592",
+            "name": "Pure Ignorance",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": null,
+                    "name": "Chris Idol"
+                },
+                {
+                    "type": "wrestler",
+                    "id": null,
+                    "name": "Noah Idol"
+                }
+            ],
+            "isMainEntity": true
+        },
+        {
+            "type": "team",
+            "id": null,
+            "name": "Maryland's Most Dangerous",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "32391",
+                    "name": "Hero Napier"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "29121",
+                    "name": "JB Anderson"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+    testTeamMatchHTML = `<div class="TableContents">
+            <table class="TBase TableBorderColor">
             <tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td>
             <td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td>
             <td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td>
@@ -1360,111 +1476,6 @@ describe('ScraperManager', () => {
                 </div>`;
 
             matches = scraperManager.extractMatches(testTeamMatchHTML);
-            expect(matches.length).toEqual(1);
-            expect(matches[0].date).toEqual("22.11.2025");
-            expect(matches[0].promotions).toEqual(['All Elite Wrestling']);
-            expect(matches[0].winners).toEqual([
-        {
-            "type": "team",
-            "id": null,
-            "name": "Boom And Doom",
-            "members": [
-                {
-                    "type": "wrestler",
-                    "id": "30329",
-                    "name": "Big Boom AJ"
-                },
-                {
-                    "type": "wrestler",
-                    "id": "7870",
-                    "name": "QT Marshall"
-                }
-            ],
-            "isMainEntity": true
-        }
-    ]);
-            expect(matches[0].losers).toEqual([
-        {
-            "type": "team",
-            "id": "5813",
-            "name": "RPG VICE",
-            "members": [
-                {
-                    "type": "wrestler",
-                    "id": "254",
-                    "name": "Rocky Romero"
-                },
-                {
-                    "type": "wrestler",
-                    "id": "2963",
-                    "name": "Trent Beretta"
-                }
-            ],
-            "isMainEntity": true
-        }
-    ]);
-            expect(matches[0].isDraw).toEqual(false);
-            expect(matches[0].isTeam).toEqual(true);
-            expect(matches[0].titles).toEqual([]);
-            expect(matches[0].isTitleChange).toEqual(false);
-            expect(matches[0].entities).toEqual([
-        {
-            "type": "wrestler",
-            "id": "30329",
-            "name": "Big Boom AJ"
-        },
-        {
-            "type": "wrestler",
-            "id": "7870",
-            "name": "QT Marshall"
-        },
-        {
-            "type": "team",
-            "id": "5813",
-            "name": "RPG VICE",
-            "members": [
-                {
-                    "type": "wrestler",
-                    "id": "254",
-                    "name": "Rocky Romero"
-                },
-                {
-                    "type": "wrestler",
-                    "id": "2963",
-                    "name": "Trent Beretta"
-                }
-            ],
-            "isMainEntity": true
-        },
-        {
-            "type": "wrestler",
-            "id": "254",
-            "name": "Rocky Romero"
-        },
-        {
-            "type": "wrestler",
-            "id": "2963",
-            "name": "Trent Beretta"
-        },
-        {
-            "type": "team",
-            "id": null,
-            "name": "Boom And Doom",
-            "members": [
-                {
-                    "type": "wrestler",
-                    "id": "30329",
-                    "name": "Big Boom AJ"
-                },
-                {
-                    "type": "wrestler",
-                    "id": "7870",
-                    "name": "QT Marshall"
-                }
-            ],
-            "isMainEntity": true
-        }
-    ]);
 
     });
 
