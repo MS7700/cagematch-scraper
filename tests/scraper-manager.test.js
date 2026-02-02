@@ -1408,60 +1408,60 @@ describe('ScraperManager', () => {
             expect(matches[0].isTitleChange).toEqual(true);
             expect(matches[0].entities).toEqual([
         {
-            "type": "wrestler",
             "id": "32391",
+            "type": "wrestler",
             "name": "Hero Napier"
         },
         {
-            "type": "wrestler",
             "id": "29121",
+            "type": "wrestler",
             "name": "JB Anderson"
         },
         {
-            "type": "wrestler",
-            "id": null,
-            "name": "Chris Idol"
-        },
-        {
-            "type": "wrestler",
-            "id": null,
-            "name": "Noah Idol"
-        },
-        {
-            "type": "stable",
             "id": "3592",
+            "type": "stable",
             "name": "Pure Ignorance",
             "members": [
                 {
-                    "type": "wrestler",
                     "id": null,
+                    "type": "wrestler",
                     "name": "Chris Idol"
                 },
                 {
-                    "type": "wrestler",
                     "id": null,
+                    "type": "wrestler",
                     "name": "Noah Idol"
                 }
             ],
             "isMainEntity": true
         },
         {
-            "type": "team",
             "id": null,
+            "type": "team",
             "name": "Maryland's Most Dangerous",
             "members": [
                 {
-                    "type": "wrestler",
                     "id": "32391",
+                    "type": "wrestler",
                     "name": "Hero Napier"
                 },
                 {
-                    "type": "wrestler",
                     "id": "29121",
+                    "type": "wrestler",
                     "name": "JB Anderson"
                 }
             ],
             "isMainEntity": true
+        },
+        {
+            "id": null,
+            "type": "wrestler",
+            "name": "Chris Idol"
+        },
+        {
+            "id": null,
+            "type": "wrestler",
+            "name": "Noah Idol"
         }
     ]);
     testTeamMatchHTML = `<div class="TableContents">
@@ -1701,5 +1701,629 @@ describe('ScraperManager', () => {
         expect(matches[0].entities).toEqual([{"type":"wrestler","id":"28928","name":"Galactico Dragon"},{"type":"wrestler","id":"23800","name":"Murcielago Plateado Jr."},{"id":null,"type":"wrestler","name":"Anarquista"},{"id":null,"type":"wrestler","name":"Kaliper"},{"id":null,"type":"team","isMainEntity":true,"name":"Anarquista & Kaliper","members":[{"id":null,"type":"wrestler","name":"Anarquista"},{"id":null,"type":"wrestler","name":"Kaliper"}]},{"id":null,"type":"wrestler","name":"Diamante Azul Jr."},{"id":null,"type":"team","isMainEntity":true,"name":"Diamante Azul Jr. & Galactico Dragon","members":[{"id":null,"type":"wrestler","name":"Diamante Azul Jr."},{"type":"wrestler","id":"28928","name":"Galactico Dragon"}]},{"id":null,"type":"wrestler","name":"Samuray Azteca"},{"id":null,"type":"team","isMainEntity":true,"name":"Murcielago Plateado Jr. & Samuray Azteca","members":[{"type":"wrestler","id":"23800","name":"Murcielago Plateado Jr."},{"id":null,"type":"wrestler","name":"Samuray Azteca"}]},{"id":null,"type":"wrestler","name":"Drabek"},{"id":null,"type":"wrestler","name":"Pequeno Pony"},{"id":null,"type":"team","isMainEntity":true,"name":"Drabek & Pequeno Pony","members":[{"id":null,"type":"wrestler","name":"Drabek"},{"id":null,"type":"wrestler","name":"Pequeno Pony"}]}]);
     })
 
+    it('should extract entities with same name but different ids', () => {
+        // Royal Rumble 2026 match with two "El Grande Americano"
+        let testMatchHTML = `<div class="TableContents"><table class="TBase TableBorderColor"><tbody><tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td><td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td><td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td><td class="THeaderCol TColSeparator">Match</td></tr>
+<tr class="TRow1 TRowPremiumLiveEvent"><td class="TCol AlignCenter TextLowlight">1</td><td class="TCol TColSeparator">31.01.2026</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=1"><img src="/site/main/img/ligen/normal/1.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="World Wrestling Entertainment" title="World Wrestling Entertainment"></a></td><td class="TCol TColSeparator">
+<span class="MatchType">Royal Rumble: </span><span class="MatchCard"><a href="?id=2&amp;nr=9967&amp;name=Roman+Reigns">Roman Reigns</a> defeats <a href="?id=2&amp;nr=18855&amp;name=Austin+Theory">Austin Theory</a> and <a href="?id=2&amp;nr=669&amp;name=Brock+Lesnar">Brock Lesnar</a> and <a href="?id=2&amp;nr=24300&amp;name=Bron+Breakker">Bron Breakker</a> and <a href="?id=2&amp;nr=10790&amp;name=Bronson+Reed">Bronson Reed</a> and <a href="?id=2&amp;nr=3686&amp;name=Cody+Rhodes">Cody Rhodes</a> and <a href="?id=2&amp;nr=16337&amp;name=Damian+Priest">Damian Priest</a> and <a href="?id=2&amp;nr=14355&amp;name=Dragon+Lee++">Dragon Lee</a> and <a href="?id=2&amp;nr=15197&amp;name=El+Grande+Americano">El Grande Americano</a> and <a href="?id=2&amp;nr=5855&amp;name=El+Grande+Americano+">El Grande Americano</a> and <a href="?id=2&amp;nr=16807&amp;name=Gunther">Gunther</a> and <a href="?id=2&amp;nr=13179&amp;name=Ilja+Dragunov">Ilja Dragunov</a> and <a href="?id=2&amp;nr=14128&amp;name=Jacob+Fatu">Jacob Fatu</a> and <a href="?id=2&amp;nr=26930&amp;name=Je'Von+Evans">Je'Von Evans</a> and <a href="?id=2&amp;nr=7350&amp;name=Jey+Uso">Jey Uso</a> and <a href="?id=2&amp;nr=4409&amp;name=LA+Knight">LA Knight</a> and <a href="?id=2&amp;nr=23160&amp;name=La+Parka++++">La Parka</a> and <a href="?id=2&amp;nr=25777&amp;name=Logan+Paul">Logan Paul</a> and <a href="?id=2&amp;nr=2750&amp;name=Matt+Cardona">Matt Cardona</a> and <a href="?id=2&amp;nr=10251&amp;name=Mr.+Iguana">Mr. Iguana</a> and <a href="?id=2&amp;nr=26953&amp;name=Oba+Femi">Oba Femi</a> and <a href="?id=2&amp;nr=10334&amp;name=Penta">Penta</a> and <a href="?id=2&amp;nr=998&amp;name=Randy+Orton">Randy Orton</a> and <a href="?id=2&amp;nr=10343&amp;name=Rey+Fenix++">Rey Fenix</a> and <a href="?id=2&amp;nr=604&amp;name=Rey+Mysterio">Rey Mysterio</a> and <a href="?id=2&amp;nr=12277&amp;name=Royce+Keys">Royce Keys</a> and <a href="?id=2&amp;nr=10610&amp;name=Rusev">Rusev</a> and <a href="?id=2&amp;nr=22525&amp;name=Solo+Sikoa">Solo Sikoa</a> and <a href="?id=2&amp;nr=1590&amp;name=The+Miz">The Miz</a> and <a href="?id=2&amp;nr=24301&amp;name=Trick+Williams">Trick Williams</a> (58:21)</span><div class="MatchEventLine"><a href="?id=1&amp;nr=434667">WWE Royal Rumble 2026</a> - Premium Live Event @ Riyadh Season Stadium At King Abdullah Financial District in Riyadh, Saudi-Arabien</div></td></tr></tbody></table></div>`;
+
+        const scraperManager = new ScraperManager();
+        let matches = scraperManager.extractMatches(testMatchHTML);
+        expect(matches.length).toEqual(1);
+        expect(matches[0].winners).toEqual([
+            {
+                "id": "9967",
+                "name": "Roman Reigns",
+                "type": "wrestler",
+                "isMainEntity": true
+            }
+        ]);
+        expect(matches[0].losers).toEqual([
+            {
+                "id": "18855",
+                "name": "Austin Theory",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "669",
+                "name": "Brock Lesnar",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "24300",
+                "name": "Bron Breakker",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "10790",
+                "name": "Bronson Reed",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "3686",
+                "name": "Cody Rhodes",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "16337",
+                "name": "Damian Priest",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "14355",
+                "name": "Dragon Lee",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "15197",
+                "name": "El Grande Americano",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "5855",
+                "name": "El Grande Americano",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "16807",
+                "name": "Gunther",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "13179",
+                "name": "Ilja Dragunov",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "14128",
+                "name": "Jacob Fatu",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "26930",
+                "name": "Je'Von Evans",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "7350",
+                "name": "Jey Uso",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "4409",
+                "name": "LA Knight",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "23160",
+                "name": "La Parka",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "25777",
+                "name": "Logan Paul",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "2750",
+                "name": "Matt Cardona",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "10251",
+                "name": "Mr. Iguana",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "26953",
+                "name": "Oba Femi",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "10334",
+                "name": "Penta",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "998",
+                "name": "Randy Orton",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "10343",
+                "name": "Rey Fenix",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "604",
+                "name": "Rey Mysterio",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "12277",
+                "name": "Royce Keys",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "10610",
+                "name": "Rusev",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "22525",
+                "name": "Solo Sikoa",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "1590",
+                "name": "The Miz",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "24301",
+                "name": "Trick Williams",
+                "type": "wrestler",
+                "isMainEntity": true
+            }
+        ]);
+        expect(matches[0].entities).toEqual([
+            {
+                "id": "9967",
+                "name": "Roman Reigns",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "18855",
+                "name": "Austin Theory",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "669",
+                "name": "Brock Lesnar",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "24300",
+                "name": "Bron Breakker",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "10790",
+                "name": "Bronson Reed",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "3686",
+                "name": "Cody Rhodes",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "16337",
+                "name": "Damian Priest",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "14355",
+                "name": "Dragon Lee",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "15197",
+                "name": "El Grande Americano",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "5855",
+                "name": "El Grande Americano",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "16807",
+                "name": "Gunther",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "13179",
+                "name": "Ilja Dragunov",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "14128",
+                "name": "Jacob Fatu",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "26930",
+                "name": "Je'Von Evans",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "7350",
+                "name": "Jey Uso",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "4409",
+                "name": "LA Knight",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "23160",
+                "name": "La Parka",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "25777",
+                "name": "Logan Paul",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "2750",
+                "name": "Matt Cardona",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "10251",
+                "name": "Mr. Iguana",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "26953",
+                "name": "Oba Femi",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "10334",
+                "name": "Penta",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "998",
+                "name": "Randy Orton",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "10343",
+                "name": "Rey Fenix",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "604",
+                "name": "Rey Mysterio",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "12277",
+                "name": "Royce Keys",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "10610",
+                "name": "Rusev",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "22525",
+                "name": "Solo Sikoa",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "1590",
+                "name": "The Miz",
+                "type": "wrestler",
+                "isMainEntity": true
+            },
+            {
+                "id": "24301",
+                "name": "Trick Williams",
+                "type": "wrestler",
+                "isMainEntity": true
+            }
+        ]);
+
+    })
+
+    it('should extract teams with same ids but different members', () => {
+        const scraperManager = new ScraperManager();
+        // Test match with two different teams having same members but different team ids
+        let testTeamMatchHTML = `<div class="TableContents"><table class="TBase TableBorderColor"><tbody><tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td><td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td><td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td><td class="THeaderCol TColSeparator">Match</td></tr>
+<tr class="TRow1 TRowOnlineStream"><td class="TCol AlignCenter TextLowlight">1</td><td class="TCol TColSeparator">17.01.2026</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=745"><img src="/site/main/img/ligen/normal/745__2021-.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="World Wonder Ring Stardom" title="World Wonder Ring Stardom"></a></td><td class="TCol TColSeparator">
+<span class="MatchCard"><a href="?id=29&amp;nr=4140&amp;name=HATE++">HATE</a> (<a href="?id=2&amp;nr=16624&amp;name=Konami+">Konami</a>, <a href="?id=2&amp;nr=18714&amp;name=Natsuko+Tora">Natsuko Tora</a> &amp; <a href="?id=2&amp;nr=18723&amp;name=Ruaka">Ruaka</a>) defeat <a href="?id=29&amp;nr=4140&amp;name=HATE++">HATE</a> (<a href="?id=2&amp;nr=27600&amp;name=Azusa+Inaba">Azusa Inaba</a>, <a href="?id=2&amp;nr=3709&amp;name=Fukigen+Death">Fukigen Death</a> &amp; <a href="?id=2&amp;nr=20416&amp;name=Rina">Rina</a>) (16:21)</span><div class="MatchEventLine"><a href="?id=1&amp;nr=444876">Stardom New Year Stars 2026 In Osaka - Tag 1</a> - Online Stream @ EDION Arena Osaka #2 in Osaka, Japan</div></td></tr></tbody></table></div>`;
+
+        let matches = scraperManager.extractMatches(testTeamMatchHTML);
+            expect(matches.length).toEqual(1);
+            expect(matches[0].date).toEqual("17.01.2026");
+            expect(matches[0].promotions).toEqual(['World Wonder Ring Stardom']);
+            expect(matches[0].winners).toEqual([
+        {
+            "type": "stable",
+            "id": "4140",
+            "name": "HATE",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "16624",
+                    "name": "Konami"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "18714",
+                    "name": "Natsuko Tora"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "18723",
+                    "name": "Ruaka"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+            expect(matches[0].losers).toEqual([
+        {
+            "type": "stable",
+            "id": "4140",
+            "name": "HATE",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "27600",
+                    "name": "Azusa Inaba"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "3709",
+                    "name": "Fukigen Death"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "20416",
+                    "name": "Rina"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+            expect(matches[0].isDraw).toEqual(false);
+            expect(matches[0].isTeam).toEqual(true);
+            expect(matches[0].entities).toEqual([
+        {
+            "type": "stable",
+            "id": "4140",
+            "name": "HATE",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "16624",
+                    "name": "Konami"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "18714",
+                    "name": "Natsuko Tora"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "18723",
+                    "name": "Ruaka"
+                }
+            ],
+            "isMainEntity": true
+        },
+        {
+            "type": "wrestler",
+            "id": "16624",
+            "name": "Konami"
+        },
+        {
+            "type": "wrestler",
+            "id": "18714",
+            "name": "Natsuko Tora"
+        },
+        {
+            "type": "wrestler",
+            "id": "18723",
+            "name": "Ruaka"
+        },
+        {
+            "type": "stable",
+            "id": "4140",
+            "name": "HATE",
+            "members": [
+                {
+                    "type": "wrestler",
+                    "id": "27600",
+                    "name": "Azusa Inaba"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "3709",
+                    "name": "Fukigen Death"
+                },
+                {
+                    "type": "wrestler",
+                    "id": "20416",
+                    "name": "Rina"
+                }
+            ],
+            "isMainEntity": true
+        },
+        {
+            "type": "wrestler",
+            "id": "27600",
+            "name": "Azusa Inaba"
+        },
+        {
+            "type": "wrestler",
+            "id": "3709",
+            "name": "Fukigen Death"
+        },
+        {
+            "type": "wrestler",
+            "id": "20416",
+            "name": "Rina"
+        }
+    ]);
+
+    })
+
+    it('should not extract matches with invalid structure', () => {
+        // Link inside brackets causes that entity cannot be defined
+        let invalidMatchHTML = `<div class="TableContents"><table class="TBase TableBorderColor"><tbody><tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td><td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td><td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td><td class="THeaderCol TColSeparator">Match</td></tr>
+<tr class="TRow1"><td class="TCol AlignCenter TextLowlight">1</td><td class="TCol TColSeparator">17.01.2026</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=2108"><img src="/site/main/img/ligen/normal/2108.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="Sangre Nueva Lucha Libre" title="Sangre Nueva Lucha Libre"></a></td><td class="TCol TColSeparator">
+<span class="MatchType">SNLL Briefcases On A Pole Six Way: </span><span class="MatchCard">C [<a href="?id=2&amp;nr=3519&amp;name=Maximo">Maximo</a>] &amp; <a href="?id=2&amp;nr=29716&amp;name=Maty+Fly">Maty Fly</a> [Villa Alemana] defeat Cris Cooper, Mark Lenox, Profeta del Dolor, Shoro Shelo (16:33)</span><div class="MatchEventLine"><a href="?id=1&amp;nr=445118">SNLL Aniversario 10</a> - Event @ Estadio Italo Composto in Villa Alemana, Region de Valparaiso, Chile</div></td></tr></tbody></table></div>`;
+
+        const scraperManager = new ScraperManager();
+        let matches = scraperManager.extractMatches(invalidMatchHTML);
+        expect(matches.length).toEqual(0);
+
+        invalidMatchHTML = `<div class="TableContents"><table class="TBase TableBorderColor"><tbody><tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td><td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td><td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td><td class="THeaderCol TColSeparator">Match</td></tr>
+<tr class="TRow1 TRowOnlineStream"><td class="TCol AlignCenter TextLowlight">1</td><td class="TCol TColSeparator">17.01.2026</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=1830"><img src="/site/main/img/ligen/normal/1830__202503-.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="Adelaide Championship Wrestling" title="Adelaide Championship Wrestling"></a></td><td class="TCol TColSeparator">
+<span class="MatchType"><a href="?id=5&amp;nr=6024">ACW Tag Team             Title</a>: </span><span class="MatchCard"><a href="?id=29&amp;nr=4401&amp;name=The+Heat[+7]">The Heat</a> (<a href="?id=2&amp;nr=23854&amp;name=Snaxx">Snaxx</a> &amp; <a href="?id=2&amp;nr=26131&amp;name=Vincent+Di+Maria">Vincent Di Maria</a>) (c) defeat <a href="?id=2&amp;nr=6256&amp;name=Rapid+Fire">Rapid Fire</a> (<a href="?id=2&amp;nr=27993&amp;name=JJ+Furno">JJ Furno</a> &amp; <a href="?id=2&amp;nr=20852&amp;name=Ryan+Rapid">Ryan Rapid</a>)</span><div class="MatchEventLine"><a href="?id=1&amp;nr=444610">ACW New Dawn 2026</a> - Online Stream @ Russian Community Centre in Norwood, South Australia, Australia</div></td></tr></tbody></table></div>`;
+
+        matches = scraperManager.extractMatches(invalidMatchHTML);
+        expect(matches.length).toEqual(0);
+
+    })
+
+    it('should ignore the alias in wrestler names', () => {
+        let invalidMatchHTML = `<div class="TableContents"><table class="TBase TableBorderColor"><tbody><tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td><td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td><td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td><td class="THeaderCol TColSeparator">Match</td></tr>
+<tr class="TRow1 TRowOnlineStream"><td class="TCol AlignCenter TextLowlight">1</td><td class="TCol TColSeparator">17.01.2026</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=3775"><img src="/site/main/img/ligen/normal/3775.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="Exodus Pro Wrestling" title="Exodus Pro Wrestling"></a><a href="?id=8&amp;nr=9"><img src="/site/main/img/ligen/normal/9__2019-.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="National Wrestling Alliance" title="National Wrestling Alliance"></a></td><td class="TCol TColSeparator">
+<span class="MatchType">Press Start, Player One Hard Mode: </span><span class="MatchCard"><a href="?id=2&amp;nr=29348&amp;name=Christian+Napier">Christian Napier</a> defeats <a href="?id=2&amp;nr=20014&amp;name=Channing+Thomas">Channing Thomas</a> and <a href="?id=2&amp;nr=14479&amp;name=Harley+T.+Morris">Harley T. Morris</a> and Luigi (<a href="?id=2&amp;nr=17516&amp;name=Cristiano+Argento">Cristiano Argento</a>) and Mario (<a href="?id=2&amp;nr=29973&amp;name=Hunner">Hunner</a>) and Towel Boy (7:36)</span><div class="MatchEventLine"><a href="?id=1&amp;nr=445079">NWA Exodus Pro Midwest New Game+</a> - Online Stream @ Treelawn Music Hall in Cleveland, Ohio, USA</div></td></tr></tbody></table></div>`;
+
+
+        const scraperManager = new ScraperManager();
+        let matches = scraperManager.extractMatches(invalidMatchHTML);
+
+        expect(matches.length).toEqual(1);
+        expect(matches[0].winners).toEqual([{
+            "type": "wrestler",
+            "id": "29348",
+            "name": "Christian Napier",
+            "isMainEntity": true
+        }]);
+        expect(matches[0].losers).toEqual([{
+            "type": "wrestler",
+            "id": "20014",
+            "name": "Channing Thomas",
+            "isMainEntity": true
+        },
+        {
+            "type": "wrestler",
+            "id": "14479",
+            "name": "Harley T. Morris",
+            "isMainEntity": true
+        },
+        {
+            "type": "wrestler",
+            "id": "17516",
+            "isMainEntity": true,
+            "name": "Cristiano Argento"
+        },
+        {
+            "type": "wrestler",
+            "id": "29973",
+            "isMainEntity": true,
+            "name": "Hunner"
+        },
+        {
+            "id": null,
+            "type": "wrestler",
+            "isMainEntity": true,
+            "name": "Towel Boy"
+        }]);
+        expect(matches[0].entities).toEqual([{
+            "type": "wrestler",
+            "id": "29348",
+            "name": "Christian Napier",
+            "isMainEntity": true
+        },
+        {
+            "type": "wrestler",
+            "id": "20014",
+            "name": "Channing Thomas",
+            "isMainEntity": true
+        },
+        {
+            "type": "wrestler",
+            "id": "14479",
+            "name": "Harley T. Morris",
+            "isMainEntity": true
+        },
+        {
+            "type": "wrestler",
+            "id": "17516",
+            "isMainEntity": true,
+            "name": "Cristiano Argento"
+        },
+        {
+            "type": "wrestler",
+            "id": "29973",
+            "isMainEntity": true,
+            "name": "Hunner"
+        },
+        {
+            "id": null,
+            "type": "wrestler",
+            "isMainEntity": true,
+            "name": "Towel Boy"
+        }]);
+    })
 });
 
