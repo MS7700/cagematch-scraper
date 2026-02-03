@@ -2741,5 +2741,234 @@ describe('ScraperManager', () => {
         }
     ]);
     })
+    it('should extract sub-teams correctly', () => {
+        let testMatchHTML = `<div class="TableContents"><table class="TBase TableBorderColor"><tbody><tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td><td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td><td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td><td class="THeaderCol TColSeparator">Match</td></tr>
+<tr class="TRow1 TRowTVShow"><td class="TCol AlignCenter TextLowlight">1</td><td class="TCol TColSeparator">31.01.2026</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=4"><img src="/site/main/img/ligen/normal/4_ROH on HonorClub.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="Ring Of Honor" title="Ring Of Honor"></a></td><td class="TCol TColSeparator">
+<span class="MatchCard"><a href="?id=2&amp;nr=3309&amp;name=Bandido">Bandido</a>, <a href="?id=2&amp;nr=20089&amp;name=Komander">Komander</a>, <a href="?id=2&amp;nr=26536&amp;name=Mascara+Dorada+">Mascara Dorada</a> &amp; <a href="?id=2&amp;nr=29680&amp;name=Xelhua">Xelhua</a> defeat <a href="?id=28&amp;nr=13680&amp;name=The+Swirl">The Swirl</a> (<a href="?id=2&amp;nr=21633&amp;name=Blake+Christian">Blake Christian</a> &amp; <a href="?id=2&amp;nr=22366&amp;name=Lee+Johnson">Lee Johnson</a>) &amp; <a href="?id=29&amp;nr=3499&amp;name=The+Premier+Athletes">The Premier Athletes</a> (<a href="?id=2&amp;nr=4836&amp;name=Ariya+Daivari">Ariya Daivari</a> &amp; <a href="?id=2&amp;nr=5741&amp;name=Tony+Nese">Tony Nese</a>) (14:15)</span><div class="MatchEventLine"><a href="?id=1&amp;nr=445766">ROH on HonorClub #154</a> - TV-Show @ ESports Stadium Arlington in Arlington, Texas, USA</div></td></tr></tbody></table></div>`;
+        const scraperManager = new ScraperManager();
+        let matches = scraperManager.extractMatches(testMatchHTML);
+        expect(matches.length).toEqual(1);
+        expect(matches[0].winners).toEqual([
+        {
+            "id": null,
+            "type": "team",
+            "isMainEntity": true,
+            "name": "Bandido, Komander, Mascara Dorada & Xelhua",
+            "members": [
+                {
+                    "id": "3309",
+                    "type": "wrestler",
+                    "name": "Bandido"
+                },
+                {
+                    "id": "20089",
+                    "type": "wrestler",
+                    "name": "Komander"
+                },
+                {
+                    "id": "26536",
+                    "type": "wrestler",
+                    "name": "Mascara Dorada"
+                },
+                {
+                    "id": "29680",
+                    "type": "wrestler",
+                    "name": "Xelhua"
+                }
+            ]
+        }
+    ]);
+        expect(matches[0].losers).toEqual([
+        {
+            "id": null,
+            "type": "team",
+            "name": "The Swirl (Blake Christian & Lee Johnson) & The Premier Athletes (Ariya Daivari & Tony Nese)",
+            "members": [
+                {
+                    "id": "13680",
+                    "type": "team",
+                    "name": "The Swirl",
+                    "members": [
+                        {
+                            "id": "21633",
+                            "type": "wrestler",
+                            "name": "Blake Christian"
+                        },
+                        {
+                            "id": "22366",
+                            "type": "wrestler",
+                            "name": "Lee Johnson"
+                        }
+                    ]
+                },
+                {
+                    "id": "3499",
+                    "type": "stable",
+                    "name": "The Premier Athletes",
+                    "members": [
+                        {
+                            "id": "4836",
+                            "type": "wrestler",
+                            "name": "Ariya Daivari"
+                        },
+                        {
+                            "id": "5741",
+                            "type": "wrestler",
+                            "name": "Tony Nese"
+                        }
+                    ]
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+
+        expect(matches[0].entities).toEqual([
+        {
+            "id": "3309",
+            "type": "wrestler",
+            "name": "Bandido"
+        },
+        {
+            "id": "20089",
+            "type": "wrestler",
+            "name": "Komander"
+        },
+        {
+            "id": "26536",
+            "type": "wrestler",
+            "name": "Mascara Dorada"
+        },
+        {
+            "id": "29680",
+            "type": "wrestler",
+            "name": "Xelhua"
+        },
+        {
+            "id": "13680",
+            "type": "team",
+            "name": "The Swirl",
+            "members": [
+                {
+                    "id": "21633",
+                    "type": "wrestler",
+                    "name": "Blake Christian"
+                },
+                {
+                    "id": "22366",
+                    "type": "wrestler",
+                    "name": "Lee Johnson"
+                }
+            ]
+        },
+        {
+            "id": "21633",
+            "type": "wrestler",
+            "name": "Blake Christian"
+        },
+        {
+            "id": "22366",
+            "type": "wrestler",
+            "name": "Lee Johnson"
+        },
+        {
+            "id": "3499",
+            "type": "stable",
+            "name": "The Premier Athletes",
+            "members": [
+                {
+                    "id": "4836",
+                    "type": "wrestler",
+                    "name": "Ariya Daivari"
+                },
+                {
+                    "id": "5741",
+                    "type": "wrestler",
+                    "name": "Tony Nese"
+                }
+            ]
+        },
+        {
+            "id": "4836",
+            "type": "wrestler",
+            "name": "Ariya Daivari"
+        },
+        {
+            "id": "5741",
+            "type": "wrestler",
+            "name": "Tony Nese"
+        },
+        {
+            "id": null,
+            "type": "team",
+            "isMainEntity": true,
+            "name": "Bandido, Komander, Mascara Dorada & Xelhua",
+            "members": [
+                {
+                    "id": "3309",
+                    "type": "wrestler",
+                    "name": "Bandido"
+                },
+                {
+                    "id": "20089",
+                    "type": "wrestler",
+                    "name": "Komander"
+                },
+                {
+                    "id": "26536",
+                    "type": "wrestler",
+                    "name": "Mascara Dorada"
+                },
+                {
+                    "id": "29680",
+                    "type": "wrestler",
+                    "name": "Xelhua"
+                }
+            ]
+        },
+        {
+            "id": null,
+            "type": "team",
+            "name": "The Swirl (Blake Christian & Lee Johnson) & The Premier Athletes (Ariya Daivari & Tony Nese)",
+            "members": [
+                {
+                    "id": "13680",
+                    "type": "team",
+                    "name": "The Swirl",
+                    "members": [
+                        {
+                            "id": "21633",
+                            "type": "wrestler",
+                            "name": "Blake Christian"
+                        },
+                        {
+                            "id": "22366",
+                            "type": "wrestler",
+                            "name": "Lee Johnson"
+                        }
+                    ]
+                },
+                {
+                    "id": "3499",
+                    "type": "stable",
+                    "name": "The Premier Athletes",
+                    "members": [
+                        {
+                            "id": "4836",
+                            "type": "wrestler",
+                            "name": "Ariya Daivari"
+                        },
+                        {
+                            "id": "5741",
+                            "type": "wrestler",
+                            "name": "Tony Nese"
+                        }
+                    ]
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+    })
 });
 
