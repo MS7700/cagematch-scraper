@@ -11,12 +11,12 @@ const MAX_PAGES = 50;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 class CagematchScraper {
-    constructor() {
+    constructor(cookies = []) {
         this.url = "https://www.cagematch.net";
         /**
          * @type {RequestManager}
          */
-        this.requestManager = new RequestManager(this.url);
+        this.requestManager = new RequestManager(this.url, cookies);
         /**
          * @type {ScraperManager}
          */
