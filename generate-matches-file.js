@@ -1,4 +1,6 @@
 
+require('dotenv').config();
+
 const CagematchScraper = require('./cagematch-scraper');
 const fs = require('node:fs/promises');
 const { execSync } = require('child_process');

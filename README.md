@@ -4,11 +4,12 @@ The Cagematch Scraper is a Node.js project designed to scrape data from the Cage
 
 ## Overview
 
-The `CagematchScraper` class is responsible for scraping match data from the Cagematch website. It uses the `RequestManager` to fetch match data and the `ScraperManager` to extract match details from the HTML. 
+The `CagematchScraper` class is responsible for scraping match data from the Cagematch website. It uses the `RequestManager` to fetch match data and the `ScraperManager` to extract match details from the HTML.
 
 ## JSON Structure Examples
 
 ### Singles Matches
+
 ```json
 {
     "date": "01.03.2025",
@@ -58,6 +59,7 @@ The `CagematchScraper` class is responsible for scraping match data from the Cag
 ```
 
 ### Tag Team Matches
+
 ```json
 {
     "date": "01.03.2025",
@@ -173,6 +175,34 @@ The `CagematchScraper` class is responsible for scraping match data from the Cag
     ]
 }
 ```
+
+## Cookies
+
+If the Cagematch site is protected by Sucuri, you can provide session cookies to skip the Playwright-based bypass. Cookies can be supplied in two ways:
+
+### 1. Environment variable
+
+Set `CAGEMATCH_SCRAPER_COOKIES` in your `.env` file using **single quotes** so the inner double quotes don't need escaping:
+
+```env
+CAGEMATCH_SCRAPER_COOKIES='[{"name": "sucuricp_tfca_...", "value": "1"}, {"name": "sucuri_cloudproxy...", "value": "..."}]'
+```
+
+### 2. Constructor parameter
+
+Pass the cookies array directly when instantiating `CagematchScraper`:
+
+```js
+const scraper = new CagematchScraper({
+  cookies: [
+    { "name": "sucuricp_tfca_...", "value": "1" },
+    { "name": "sucuri_cloudproxy...", "value": "..." }
+  ]
+});
+```
+
+If no valid cookies are provided, the scraper will fall back to Playwright to obtain them automatically.
+
 ## Logging
 
 All classes include a `setIsVerbose` method that enables log visualization for the requesting and scraping processes. Alternatively, you can set the `NODE_DEBUG` environment variable to `CAGEMATCH-SCRAPER*` to view all logs.
@@ -190,5 +220,5 @@ For example, to generate the matches file for March 15, 2023, run:
 ```sh
 npm run generateMatchesFile 15 3 2023
 ```
-Once executed, it will generate a `result.json` file in your folder.
 
+Once executed, it will generate a `result.json` file in your folder.
