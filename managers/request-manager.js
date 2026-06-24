@@ -72,16 +72,24 @@ class RequestManager {
     }
 
     async close() {
-        if (this.context) {
-            await this.context.close();
-            this.context = null;
-        }
-        if (this.browser) {
-            if (this.isVerbose) logger("Closing Playwright browser...", "info", section, true);
-            await this.browser.close();
-            this.browser = null;
-        }
+    if (this.context) {
+        try { await this.context.close(); }
+        catch (e) { logger(`Error closing context: ${e.message}`, "error", section, this.isVerbose); }
+        this.context = null;
     }
+    if (this.browser) {
+        if (this.isVerbose) logger("Closing Playwright browser...", "info", section, true);
+        try {
+            await Promise.race([
+                this.browser.close(),
+                new Promise((_, rej) => setTimeout(() => rej(new Error("close timed out")), 5000))
+            ]);
+        } catch (e) {
+            logger(`browser.close() failed/hung: ${e.message}`, "error", section, true);
+        }
+        this.browser = null;
+    }
+}
 
     async getMatchesByDate(date, page = 0) {
         if (!this.browser) {
@@ -120,6 +128,7 @@ class RequestManager {
             if (activePage) {
                 await activePage.close();
             }
+            await this.close(); 
         }
     }
 }
