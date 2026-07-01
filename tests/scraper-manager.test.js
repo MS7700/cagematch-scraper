@@ -2741,6 +2741,296 @@ describe('ScraperManager', () => {
         }
     ]);
     })
+    it('should extract teams inside stables', () => {
+        let testMatchHTML = `<div class="TableContents"><table class="TBase TableBorderColor"><tbody><tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td><td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td><td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td><td class="THeaderCol TColSeparator">Match</td></tr>
+<tr class="TRow2"><td class="TCol AlignCenter TextLowlight">38</td><td class="TCol TColSeparator">30.05.1998</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=1"><img src="/site/main/img/ligen/normal/1__19971209-20020505.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="World Wrestling Entertainment" title="World Wrestling Entertainment"></a></td><td class="TCol TColSeparator">
+<span class="MatchCard"><a href="?id=28&amp;nr=59&amp;name=LOD+2000">LOD 2000</a> (<a href="?id=2&amp;nr=509&amp;name=Road+Warrior+Animal">Road Warrior Animal</a> &amp; <a href="?id=2&amp;nr=553&amp;name=Road+Warrior+Hawk">Road Warrior Hawk</a>), <a href="?id=2&amp;nr=635&amp;name=Steve+Austin">Steve Austin</a> &amp; <a href="?id=2&amp;nr=761&amp;name=The+Undertaker">The Undertaker</a> defeat <a href="?id=29&amp;nr=47&amp;name=D-Generation+X+">D-Generation X</a> (<a href="?id=28&amp;nr=91&amp;name=The+New+Age+Outlaws">The New Age Outlaws</a> (<a href="?id=2&amp;nr=1081&amp;name=Billy+Gunn">Billy Gunn</a> &amp; <a href="?id=2&amp;nr=760&amp;name=The+Road+Dogg">The Road Dogg</a>) &amp; <a href="?id=2&amp;nr=496&amp;name=Triple+H">Triple H</a>) &amp; <a href="?id=2&amp;nr=379&amp;name=Kane">Kane</a></span><div class="MatchEventLine"><a href="?id=1&amp;nr=35994">WWF Hou<span class="data-54061d6eb" style="visibility:hidden;position:absolute;z-index:-1"></span>se Show</a> - House Show @ Cobo Arena in Detroit​, Michigan, USA</div></td></tr></tbody></table></div>`;
+        const scraperManager = new ScraperManager();
+        let matches = scraperManager.extractMatches(testMatchHTML);
+        expect(matches.length).toEqual(1);
+        expect(matches[0].entities).toEqual([{
+            "id": "59",
+            "type": "team",
+            "name": "LOD 2000",
+            "members": [
+                {
+                    "id": "509",
+                    "type": "wrestler",
+                    "name": "Road Warrior Animal"
+                },
+                {
+                    "id": "553",
+                    "type": "wrestler",
+                    "name": "Road Warrior Hawk"
+                }
+            ]
+        },
+        {
+            "id": "509",
+            "type": "wrestler",
+            "name": "Road Warrior Animal"
+        },
+        {
+            "id": "553",
+            "type": "wrestler",
+            "name": "Road Warrior Hawk"
+        },
+        {
+            "id": "635",
+            "type": "wrestler",
+            "name": "Steve Austin"
+        },
+        {
+            "id": "761",
+            "type": "wrestler",
+            "name": "The Undertaker"
+        },
+        {
+            "id": "47",
+            "type": "stable",
+            "name": "D-Generation X",
+            "members": [
+                {
+                    "id": "91",
+                    "type": "team",
+                    "name": "The New Age Outlaws",
+                    "members": [
+                        {
+                            "id": "1081",
+                            "type": "wrestler",
+                            "name": "Billy Gunn"
+                        },
+                        {
+                            "id": "760",
+                            "type": "wrestler",
+                            "name": "The Road Dogg"
+                        }
+                    ]
+                },
+                {
+                    "id": "1081",
+                    "type": "wrestler",
+                    "name": "Billy Gunn"
+                },
+                {
+                    "id": "760",
+                    "type": "wrestler",
+                    "name": "The Road Dogg"
+                },
+                {
+                    "id": "496",
+                    "type": "wrestler",
+                    "name": "Triple H"
+                }
+            ]
+        },
+        {
+            "id": "91",
+            "type": "team",
+            "name": "The New Age Outlaws",
+            "members": [
+                {
+                    "id": "1081",
+                    "type": "wrestler",
+                    "name": "Billy Gunn"
+                },
+                {
+                    "id": "760",
+                    "type": "wrestler",
+                    "name": "The Road Dogg"
+                }
+            ]
+        },
+        {
+            "id": "1081",
+            "type": "wrestler",
+            "name": "Billy Gunn"
+        },
+        {
+            "id": "760",
+            "type": "wrestler",
+            "name": "The Road Dogg"
+        },
+        {
+            "id": "496",
+            "type": "wrestler",
+            "name": "Triple H"
+        },
+        {
+            "id": "379",
+            "type": "wrestler",
+            "name": "Kane"
+        },
+        {
+            "id": null,
+            "type": "team",
+            "isMainEntity": true,
+            "name": "LOD 2000 (Road Warrior Animal & Road Warrior Hawk), Steve Austin & The Undertaker",
+            "members": [
+                {
+                    "id": "59",
+                    "type": "team",
+                    "name": "LOD 2000",
+                    "members": [
+                        {
+                            "id": "509",
+                            "type": "wrestler",
+                            "name": "Road Warrior Animal"
+                        },
+                        {
+                            "id": "553",
+                            "type": "wrestler",
+                            "name": "Road Warrior Hawk"
+                        }
+                    ]
+                },
+                {
+                    "id": "635",
+                    "type": "wrestler",
+                    "name": "Steve Austin"
+                },
+                {
+                    "id": "761",
+                    "type": "wrestler",
+                    "name": "The Undertaker"
+                }
+            ]
+        },
+        {
+            "id": null,
+            "type": "team",
+            "isMainEntity": true,
+            "name": "D-Generation X (The New Age Outlaws (Billy Gunn & The Road Dogg) & Triple H) & Kane",
+            "members": [
+                {
+                    "id": "47",
+                    "type": "stable",
+                    "name": "D-Generation X",
+                    "members": [
+                        {
+                        "id": "91",
+                        "type": "team",
+                        "name": "The New Age Outlaws",
+                        "members": [
+                            {
+                                "id": "1081",
+                                "type": "wrestler",
+                                "name": "Billy Gunn"
+                            },
+                            {
+                                "id": "760",
+                                "type": "wrestler",
+                                "name": "The Road Dogg"
+                            }
+                        ]
+                    },
+                        {
+                            "id": "496",
+                            "type": "wrestler",
+                            "name": "Triple H"
+                        }
+                    ]
+                },
+                {
+                    "id": "379",
+                    "type": "wrestler",
+                    "name": "Kane"
+                }
+            ]
+        }
+    ]);
+    expect(matches[0].winners).toEqual([
+        {
+            "id": null,
+            "type": "team",
+            "isMainEntity": true,
+            "name": "LOD 2000 (Road Warrior Animal & Road Warrior Hawk), Steve Austin & The Undertaker",
+            "members": [
+                {
+                    "id": "59",
+                    "type": "team",
+                    "name": "LOD 2000",
+                    "members": [
+                        {
+                            "id": "509",
+                            "type": "wrestler",
+                            "name": "Road Warrior Animal"
+                        },
+                        {
+                            "id": "553",
+                            "type": "wrestler",
+                            "name": "Road Warrior Hawk"
+                        }
+                    ]
+                },
+                {
+                    "id": "635",
+                    "type": "wrestler",
+                    "name": "Steve Austin"
+                },
+                {
+                    "id": "761",
+                    "type": "wrestler",
+                    "name": "The Undertaker"
+                }
+            ]
+        }
+    ]);
+    expect(matches[0].losers).toEqual([
+        {
+            "id": null,
+            "type": "team",
+            "isMainEntity": true,
+            "name": "D-Generation X (The New Age Outlaws (Billy Gunn & The Road Dogg) & Triple H) & Kane",
+            "members": [
+                {
+                    "id": "47",
+                    "type": "stable",
+                    "name": "D-Generation X",
+                    "members": [
+                        {
+                            "id": "91",
+                            "type": "team",
+                            "name": "The New Age Outlaws",
+                            "members": [
+                                {
+                                    "id": "1081",
+                                    "type": "wrestler",
+                                    "name": "Billy Gunn"
+                                },
+                                {
+                                    "id": "760",
+                                    "type": "wrestler",
+                                    "name": "The Road Dogg"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "1081",
+                            "type": "wrestler",
+                            "name": "Billy Gunn"
+                        },
+                        {
+                            "id": "760",
+                            "type": "wrestler",
+                            "name": "The Road Dogg"
+                        },
+                        {
+                            "id": "496",
+                            "type": "wrestler",
+                            "name": "Triple H"
+                        }
+                    ]
+                },
+                {
+                    "id": "379",
+                    "type": "wrestler",
+                    "name": "Kane"
+                }
+            ]
+        }
+    ]);
+    })
     it('should extract sub-teams correctly', () => {
         let testMatchHTML = `<div class="TableContents"><table class="TBase TableBorderColor"><tbody><tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td><td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td><td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td><td class="THeaderCol TColSeparator">Match</td></tr>
 <tr class="TRow1 TRowTVShow"><td class="TCol AlignCenter TextLowlight">1</td><td class="TCol TColSeparator">31.01.2026</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=4"><img src="/site/main/img/ligen/normal/4_ROH on HonorClub.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="Ring Of Honor" title="Ring Of Honor"></a></td><td class="TCol TColSeparator">
@@ -2970,5 +3260,112 @@ describe('ScraperManager', () => {
         }
     ]);
     })
+     it('should extract teams with & in their name correctly', () => {
+        let testMatchHTML = `<div class="TableContents"><table class="TBase TableBorderColor"><tbody><tr class="THeaderRow"><td class="THeaderCol AlignCenter" style="width: 30px">#</td><td class="THeaderCol TColSeparator" style="white-space:nowrap;width:1%;">Date</td><td class="THeaderCol TColSeparator" style="width:25px;">Promotion</td><td class="THeaderCol TColSeparator">Match</td></tr>
+<tr class="TRow2"><td class="TCol AlignCenter TextLowlight">34</td><td class="TCol TColSeparator">22.04.2000</td><td class="TCol TColSeparator"><a href="?id=8&amp;nr=1"><img src="/site/main/img/ligen/normal/1__19971209-20020505.gif" class="ImagePromotionLogoMini ImagePromotionLogo_mini" width="36" height="18" alt="World Wrestling Entertainment" title="World Wrestling Entertainment"></a></td><td class="TCol TColSeparator">
+<span class="MatchCard"><a href="?id=28&amp;nr=890&amp;name=T&amp;A">T&amp;A</a> (<a href="?id=2&amp;nr=580&amp;name=Albert">Albert</a> &amp; <a href="?id=2&amp;nr=1047&amp;name=Test">Test</a>) defeat <a href="?id=28&amp;nr=42&amp;name=The+Head+Bangers">The Head Bangers</a> (<a href="?id=2&amp;nr=389&amp;name=Mosh">Mosh</a> &amp; <a href="?id=2&amp;nr=975&amp;name=Thrasher">Thrasher</a>)</span><div class="MatchEventLine"><a href="?id=1&amp;nr=27426">W<span id="c-f21786eb9" style="display:none"></span>WF House Show</a> - House Show @ Carolina Coliseum in Columbia, South <!-- please do not scrape us -->Carolina, USA</div></td></tr></tbody></table></div>`;
+        const scraperManager = new ScraperManager();
+        let matches = scraperManager.extractMatches(testMatchHTML);
+
+        expect(matches.length).toEqual(1);
+        expect(matches[0].entities).toEqual([
+        {
+            "id": "890",
+            "type": "team",
+            "name": "T&A",
+            "members": [
+                {
+                    "id": "580",
+                    "type": "wrestler",
+                    "name": "Albert"
+                },
+                {
+                    "id": "1047",
+                    "type": "wrestler",
+                    "name": "Test"
+                }
+            ],
+            "isMainEntity": true
+        },
+        {
+            "id": "580",
+            "type": "wrestler",
+            "name": "Albert"
+        },
+        {
+            "id": "1047",
+            "type": "wrestler",
+            "name": "Test"
+        },
+        {
+            "id": "42",
+            "type": "team",
+            "name": "The Head Bangers",
+            "members": [
+                {
+                    "id": "389",
+                    "type": "wrestler",
+                    "name": "Mosh"
+                },
+                {
+                    "id": "975",
+                    "type": "wrestler",
+                    "name": "Thrasher"
+                }
+            ],
+            "isMainEntity": true
+        },
+        {
+            "id": "389",
+            "type": "wrestler",
+            "name": "Mosh"
+        },
+        {
+            "id": "975",
+            "type": "wrestler",
+            "name": "Thrasher"
+        }
+    ]);
+    expect(matches[0].winners).toEqual([
+        {
+            "id": "890",
+            "type": "team",
+            "name": "T&A",
+            "members": [
+                {
+                    "id": "580",
+                    "type": "wrestler",
+                    "name": "Albert"
+                },
+                {
+                    "id": "1047",
+                    "type": "wrestler",
+                    "name": "Test"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+    expect(matches[0].losers).toEqual([
+        {
+            "id": "42",
+            "type": "team",
+            "name": "The Head Bangers",
+            "members": [
+                {
+                    "id": "389",
+                    "type": "wrestler",
+                    "name": "Mosh"
+                },
+                {
+                    "id": "975",
+                    "type": "wrestler",
+                    "name": "Thrasher"
+                }
+            ],
+            "isMainEntity": true
+        }
+    ]);
+    });
 });
 
