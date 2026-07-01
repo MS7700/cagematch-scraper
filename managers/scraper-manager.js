@@ -3,6 +3,41 @@ const { splitWithParenthesisHandling, cleanMatchesText, splitBySeparatorRaw, ext
 const logger = require('../utility/logger');
 const section = "CAGEMATCH-SCRAPER:SCRAPER-MANAGER";
 
+// Builds the flattened member list for a team/stable: every direct member is kept,
+// and for any member that is itself a team/stable, that member's own members are
+// appended right after it (one level). This exposes every individual wrestler at the
+// team's top level while preserving the nested sub-team object.
+function flattenMembers(structMembers) {
+    const flat = [];
+    structMembers.forEach(m => {
+        flat.push(m);
+        if (m && m.members && m.members.length) {
+            m.members.forEach(sub => flat.push(sub));
+        }
+    });
+    return flat;
+}
+
+// Returns a deep "structural" copy of an entity, undoing the flattening: members that
+// were appended because they belong to a preceding sub-team are dropped, so only the
+// direct hierarchical members remain. Comparison is by object reference, which matches
+// the refs flattenMembers reuses.
+function structuralView(entity) {
+    if (!entity || !entity.members || !entity.members.length) {
+        return { ...entity };
+    }
+    const skip = new Set();
+    const direct = [];
+    entity.members.forEach(m => {
+        if (skip.has(m)) return;
+        direct.push(structuralView(m));
+        if (m && m.members && m.members.length) {
+            m.members.forEach(sub => skip.add(sub));
+        }
+    });
+    return { ...entity, members: direct };
+}
+
 
 
 class ScraperManager {
@@ -140,7 +175,7 @@ class ScraperManager {
                     throw new Error("Invalid Format: Wrestler ID used as Team Wrapper");
                 }
 
-                const memberNames = membersContent.split(/&|,/).map(s => s.trim());
+                const memberNames = splitWithParenthesisHandling(membersContent).map(s => s.trim());
                 const members = [];
                 memberNames.forEach(mName => {
                     const m = resolveEntity(mName, "wrestler");
@@ -150,10 +185,10 @@ class ScraperManager {
                 if (!teamEntity && members.length === 1) return members[0];
 
                 if (!teamEntity) {
-                    teamEntity = { id: null, type: "team", name: teamName, members: members };
+                    teamEntity = { id: null, type: "team", name: teamName, members: flattenMembers(members) };
                     entities.push(teamEntity);
                 } else {
-                    if(!teamEntity.members) teamEntity.members = members;
+                    if(!teamEntity.members) teamEntity.members = flattenMembers(members);
                 }
                 return teamEntity;
             } 
@@ -171,6 +206,18 @@ class ScraperManager {
             return entity;
         };
 
+        // Detects whether a part is a single known team/stable whose own name contains
+        // separator characters (e.g. "T&A (Albert & Test)"). Without this, the "&" inside
+        // the team name would be treated as a member separator and split the name apart.
+        const isSingleKnownTeam = (part) => {
+            const sr = extractLastBalancedGroup(part);
+            if (!sr) return false;
+            let head = sr.head;
+            const alias = extractLastBalancedGroup(head);
+            if (alias) head = alias.head;
+            return linkMap.has(head) && linkMap.get(head).length > 0;
+        };
+
         const processSide = (sideText) => {
             if (!sideText) return [];
             const topLevelParts = splitBySeparatorRaw(sideText, " and ");
@@ -180,14 +227,15 @@ class ScraperManager {
                 const trimmedPart = part.trim();
                 
                 const membersParts = splitWithParenthesisHandling(trimmedPart);
-                if (membersParts.length > 1) {
+                if (membersParts.length > 1 && !isSingleKnownTeam(trimmedPart)) {
                     const members = [];
                     membersParts.forEach(mp => {
                         const m = resolveEntity(mp.trim(), "wrestler");
                         if (m) members.push(m);
                     });
                     const teamEntity = { id: null, type: "team", isMainEntity: true, name: trimmedPart, members: members };
-                    if (!entities.some(e => e.name === teamEntity.name && e.type === "team")) entities.push(teamEntity);
+                    const structuralClone = structuralView(teamEntity);
+                    if (!entities.some(e => e.name === structuralClone.name && e.type === "team")) entities.push(structuralClone);
                     sideEntities.push(teamEntity);
                     return;
                 }
